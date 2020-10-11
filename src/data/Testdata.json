@@ -1,0 +1,53 @@
+{
+    "features": [{
+            "type": "Feature",
+            "properties": {
+                "USER_ID": 1,
+                "NAME": "กรุงเทพ",
+                "DESCRIPTION": "ฝนตกทั้งวันเลย น้ำท่วมแล้ววววว"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [100.501762, 13.756331]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "USER_ID": 2,
+                "NAME": "แพร่",
+                "DESCRIPTION": "ฝนตกครบ 24 ชั่วโมงแล้วนะ"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [100.141340, 18.145540]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "USER_ID": 3,
+                "NAME": "KMUTT",
+                "DESCRIPTION": "น้ำท่วมมอ"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [100.4929, 13.6495]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "USER_ID": 4,
+                "NAME": "KMUTT",
+                "DESCRIPTION": "ฝนตกทั้งวันเลย ไปเรียนไม่ได้"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [100.4929, 13.6495]
+            }
+        }
+
+
+    ]
+}
