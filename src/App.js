@@ -8,6 +8,10 @@ import * as Testdata from "./data/Testdata.json";
 
 function App() {
   const [activepoint, setActivepoint] = React.useState(null);
+  const map = new Icon({
+    iconUrl: "/marker.svg",
+    iconSize: [30 , 30]
+  });
  
   return (
     <div className='App container-fluid'>
@@ -25,6 +29,7 @@ function App() {
           onClick={() => {
             setActivepoint(point);
           }}
+          icon={map}
         />
       ))}
 
