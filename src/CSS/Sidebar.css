@@ -17,7 +17,7 @@
 .logo {
     width: 24px;
     height: 24px;
-    margin-right: 35px;
+    margin-right: 20px;
 }
 
 .profile-name {
@@ -48,12 +48,17 @@
     text-decoration: none;
     display: block;
     color: #263669;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-top-style: solid;
+    border-top-color: #d8d7d7;
 }
 
 .sidebar-link:hover {
     color: #263669;
+    letter-spacing: 2px;
     background-color: #FFFFFF;
-    border-right: 8px solid #263669;
+    border-right: 10px solid #263669;
     transition: transform .2s;
     /* Animation */
     transform: scale(1.05);

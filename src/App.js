@@ -14,9 +14,14 @@ function App() {
   });
  
   return (
-    <div className='App container-fluid'>
+    <div className='App'>
       <h3 className='App-link'>หน้าแรก</h3>
       <hr className='App-line'></hr>
+    <div>
+    <form>
+        <input class='input' type="text" name="search" placeholder="Search.."/>
+        </form>
+    </div>
     <Sidebar />
     <Map center={[13.76, 100.51]} zoom={6}>
     {Testdata.features.map(point => (
