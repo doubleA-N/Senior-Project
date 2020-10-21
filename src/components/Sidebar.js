@@ -14,7 +14,7 @@ class sidebar extends React.Component {
             <div>
                 <div class="sidenav">
                 <img class ='img-sidebar' src={img}/>
-                <p class ='profile-name'>UserName..</p>
+                <p class ='profile-name'>UserName</p>
                 <a class ='profile-sidebar'href="#">โปรไฟล์ของคุณ</a>
                 <a class ='sidebar-link' href="/"><img class ='logo' src={folder}/>หน้าแรก</a>
                 <a class ='sidebar-link' href="#"><img class ='logo' src={report}/>แจ้งปัญหา</a>
