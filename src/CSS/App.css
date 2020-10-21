@@ -1,36 +1,46 @@
 @import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
+@import '~leaflet/dist/leaflet.css';
+@import '~react-leaflet-markercluster/dist/styles.min.css';
 .App {
     font-family: 'Prompt', sans-serif;
     font-weight: 600;
     background-color: #f1f1f1;
-    margin-top: auto;
+    margin-top: 0px;
 }
 
 .App-link {
     color: #263669;
-    margin-top: 0;
+    float: left;
+    align-items: center;
+    margin-top: 20px;
     margin-left: 300px;
 }
 
 .App-line {
     border-bottom: 4px solid #263669;
-    width: 60%;
-    margin-left: auto;
+    width: 55%;
+    margin-top: 0px;
+    margin-left: 300px;
     margin-right: auto;
 }
 
 .leaflet-container {
-    height: 900px;
+    height: 500px;
     width: 600px;
     margin-left: 300px;
 }
 
 .input {
-    width: 130px;
+    margin-top: 20px;
+    margin-left: 800px;
+    width: 250px;
+    height: 35px;
     box-sizing: border-box;
-    border: 2px solid;
+    border: 1px solid;
+    border-color: #263669;
     border-radius: 25px;
     font-size: 16px;
+    background-image: url("../img/search.png");
     background-color: #263669;
     background-position: 10px 10px;
     background-repeat: no-repeat;
@@ -39,6 +49,6 @@
     transition: width 0.4s ease-in-out;
 }
 
-.input:focus {
-    width: 30%;
+.input::placeholder {
+    color: #ffffff;
 }
