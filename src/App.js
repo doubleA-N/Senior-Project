@@ -14,11 +14,12 @@ function App() {
   <BrowserRouter>
   <div className='App'>
     <Sidebar/>
-
-    <Switch>
-      <Route path='/' exact component={Mapping} />
-      <Route path='/AddData' exact component={AddData} />
-    </Switch>  
+    <div className='content'>
+      <Switch>
+        <Route path='/' exact component={Mapping} />
+        <Route path='/AddData' exact component={AddData} />
+      </Switch>  
+    </div>
   </div> 
   </BrowserRouter>
    
