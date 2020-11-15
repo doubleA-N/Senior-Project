@@ -1,0 +1,28 @@
+.button {
+    margin: 0;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    /* margin-top: 30px; */
+    /* margin-left: 55px; */
+    transition: all 0.2s;
+}
+
+.button:hover {
+    transition: transform .2s;
+    /* Animation */
+    transform: scale(1.05);
+}
+
+.center {
+    position: absolute;
+    top: auto;
+    left: 30%;
+}
+
+.map {
+    height: 400px;
+    width: 700px;
+    /* margin-left: 300px; */
+    margin-top: 20px;
+}

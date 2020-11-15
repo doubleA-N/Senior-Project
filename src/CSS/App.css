@@ -6,49 +6,38 @@
     font-weight: 600;
     background-color: #f1f1f1;
     margin-top: 0px;
+    display: flex;
+    height: 100vh;
 }
 
 .App-link {
     color: #263669;
     float: left;
-    align-items: center;
+    /* align-items: center; */
     margin-top: 20px;
-    margin-left: 300px;
+    /* margin-left: 300px; */
 }
 
 .App-line {
     border-bottom: 4px solid #263669;
     width: 55%;
-    margin-top: 0px;
-    margin-left: 300px;
-    margin-right: auto;
+    /* margin-top: 0px; */
+    /* margin-left: 0px; */
+    /* margin-right: auto; */
 }
 
 .leaflet-container {
-    height: 500px;
-    width: 600px;
-    margin-left: 300px;
-}
-
-.input {
+    height: 600px;
+    width: 800px;
+    /* margin-left: 300px; */
     margin-top: 20px;
-    margin-left: 800px;
-    width: 250px;
-    height: 35px;
-    box-sizing: border-box;
-    border: 1px solid;
-    border-color: #263669;
-    border-radius: 25px;
-    font-size: 16px;
-    background-image: url("../img/search.png");
-    background-color: #263669;
-    background-position: 10px 10px;
-    background-repeat: no-repeat;
-    padding: 12px 20px 12px 40px;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
 }
 
-.input::placeholder {
-    color: #ffffff;
+.page {
+    display: flex;
+    justify-content: center;
+}
+
+.full-screen {
+    width: 100%;
 }
