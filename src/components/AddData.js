@@ -70,7 +70,9 @@ class AddData extends React.Component {
     
     render() {
       return (
-        <div className='App App-link center'>
+        <div>
+          <h3 className='heading'>รายงานปัญหา</h3>
+          <div className='App App-link center'>
         
         <form onSubmit={this.addUser}>
             
@@ -83,7 +85,7 @@ class AddData extends React.Component {
               onChange={this.updateInput}
               value={this.state.name}
             />
-            <label for='report'>รายงานปัญหา </label>
+            <label for='report'>แจ้งปัญหาปัญหา </label>
             <textarea
               class ='form-control'
               id='report'
@@ -95,10 +97,13 @@ class AddData extends React.Component {
             />
                   
             <button className='btn btn-danger btn-lg button' type="submit">แจ้งปัญหา</button>
+          <label>ปัญหาของคุณเกิดขึ้นที่ใด</label>
           <GoogleMap {...this.props} />
         </form>
                 
         </div>
+        </div>
+        
         
           );
         }
