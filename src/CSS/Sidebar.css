@@ -5,10 +5,19 @@
     overflow-x: hidden;
     padding-top: 150px;
     z-index: auto;
+    position: fixed;
 }
 
 .img-sidebar {
-    margin-left: 85px;
+    margin-left: 110px;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+}
+
+.google {
+    width: 32px;
+    height: 32px;
 }
 
 .logo {
@@ -18,15 +27,15 @@
 }
 
 .profile-name {
-    margin-left: 80px;
+    text-align: center;
     color: #263669;
-    display: inline-block;
+    /* display: inline-block; */
     margin-bottom: 0.5px;
 }
 
 .profile-sidebar {
     display: inline-block;
-    margin-left: 72px;
+    margin-left: 95px;
     margin-bottom: 50px;
     font-weight: 400;
     font-size: 14px;
@@ -72,23 +81,57 @@
 
 a.button3 {
     display: inline-block;
-    padding: 0.3em 1.2em;
-    margin: 100px 0.3em 0.3em 0;
-    margin-left: 55px;
+    padding: 0.3em 2em;
+    margin: 20px 0.3em 0.3em 0;
+    margin-bottom: 50px;
+    margin-left: 50px;
     border-radius: 2em;
     box-sizing: border-box;
     text-decoration: none;
     font-weight: 300;
     color: #FFFFFF;
-    background-color: #E4432F;
+    background-color: #263669;
     text-align: center;
+    justify-content: center;
+    align-items: center;
     transition: all 0.2s;
 }
 
 a.button3:hover {
-    background-color: #E4432F;
+    background-color: #263669a9;
     color: #ffffff;
     transition: transform .2s;
     /* Animation */
     transform: scale(1.05);
+}
+
+a.button-logout {
+    display: inline-block;
+    padding: 0.3em 2em;
+    margin: 20px 0.3em 0.3em 0;
+    /* margin-bottom: 10px; */
+    margin-left: 70px;
+    border-radius: 2em;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-weight: 300;
+    color: #FFFFFF;
+    background-color: #e4432f;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+a.button-logout:hover {
+    background-color: #e4442fbb;
+    color: #ffffff;
+    transition: transform .2s;
+    /* Animation */
+    transform: scale(1.05);
+}
+
+.list {
+    margin-top: 120px;
+    margin-bottom: 105px;
 }

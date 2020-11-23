@@ -1,0 +1,23 @@
+.bg-card {
+    background-color: #354064;
+    color: aliceblue;
+}
+
+.news {
+    display: inline-block;
+    margin-left: 10px;
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.link {
+    color: #ffffff;
+}
+
+.link:hover {
+    color: #ffffff;
+}
+
+.hr-news {
+    border-bottom: 1px solid #ffffff;
+}

@@ -9,7 +9,7 @@ import { geolocated } from "react-geolocated";
 
 const map = new Icon({
   iconUrl: "/marker.svg",
-  iconSize: [30, 30]
+  iconSize: [25, 41]
 });
 
 
@@ -38,7 +38,7 @@ class GoogleMap extends React.Component{
           ? <div>Geolocation is not enabled</div>
           : this.props.coords
             ? 
-            <Map className='map' center={[13.76, 100.51]} zoom={5} onClick={this.handleClick}>
+            <Map className='map' center={[this.props.coords.latitude, this.props.coords.longitude]} zoom={9} onClick={this.handleClick}>
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

@@ -1,28 +1,10 @@
 import React from 'react';
-import {Map, TileLayer, Popup, Marker} from "react-leaflet";
-import { Icon } from "leaflet";
-import { db, auth } from '../data/firebase'
+import { db, auth, provider } from '../data/firebase'
 import '../CSS/App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import GoogleMap from './GoogleMap';
 import { geolocated } from "react-geolocated";
 
-// import GoogleMap from './GoogleMap'
-
-const MyMarker = props => {
-
-  const initMarker = ref => {
-    if (ref) {
-      ref.leafletElement.openPopup()
-    }
-  }
-
-  return <Marker ref={initMarker} {...props} icon={map}/>
-}
-const map = new Icon({
-  iconUrl: "/marker.svg",
-  iconSize: [30, 30]
-});
 
 let id = Math.random()*100
 
@@ -30,13 +12,25 @@ class AddData extends React.Component {
     constructor() {
         super();
         this.state = {
+          user: null,
          name: "",
          description: "",
          currentPos: null
         };
         this.handleClick = this.handleClick.bind(this);
       }
-      
+      componentDidMount() {
+        auth.onAuthStateChanged((user) => {
+          if (user) {
+            this.setState({user})
+          }
+        })
+      }
+
+      send() {
+        alert("คุณได้แจ้งปัญหาเรียบร้อยแล้ว");
+      }
+    
     handleClick(e){
         this.setState({ currentPos: e.latlng });
         console.log(e.latlng)
@@ -55,62 +49,96 @@ class AddData extends React.Component {
             timestampsInSnapshots: true
         });
         db.collection("news_thairath").add({
-            id: id,
-            name: this.state.name,
+            uid: this.state.user.uid,
+            photo: this.state.user.photoURL,
+            name: this.state.user.displayName,
             news_name: this.state.description,
-            
+            person: 'Normal User',
             location: JSON.parse(JSON.stringify([this.props.coords.latitude,this.props.coords.longitude]))
         });  
         this.setState({
         name: "",
         description: "",
-       
         });
       };
     
     render() {
       return (
         <div>
+          <div className='App-link'>
           <h3 className='heading'>รายงานปัญหา</h3>
-          <div className='App App-link center'>
-        
-        <form onSubmit={this.addUser}>
-            
-            <label>ชื่อของคุณ </label>
-            <input
-              class ='form-control'
-              type="text"
-              name="name"
-              placeholder="input your name"
-              onChange={this.updateInput}
-              value={this.state.name}
-            />
-            <label for='report'>แจ้งปัญหาปัญหา </label>
-            <textarea
-              class ='form-control'
-              id='report'
-              type="text"
-              name="description"
-              placeholder="report here"
-              onChange={this.updateInput}
-              value={this.state.description}
-            />
-                  
-            <button className='btn btn-danger btn-lg button' type="submit">แจ้งปัญหา</button>
-          <label>ปัญหาของคุณเกิดขึ้นที่ใด</label>
-          <GoogleMap {...this.props} />
-        </form>
+          <div  className='App-line'></div>
+          {this.state.user?
+            <form onSubmit={this.addUser}>
+            <div className='form-center' >      
+                 
+                  <label for='report'>รายงานปัญหาของคุณ </label>
+                  <textarea
+                    class ='form-control'
+                    id='report'
+                    type="text"
+                    name="description"
+                    placeholder="report here"
+                    onChange={this.updateInput}
+                    value={this.state.description}
+                  />
                 
-        </div>
-        </div>
+                <div className='map-content'>
+                <label className='text-content' for='map'>ปัญหาของคุณเกิดขึ้นที่ใด</label>
+                <GoogleMap id='map' {...this.props} />
+                </div>
+                <div className='button text-center'>
+                <button className='btn btn-danger btn-lg' type="submit" onClick={this.send}>แจ้งปัญหา</button>
+              </div>
+              </div>
+              </form>
+               :
+               <div className='mt-4'>
+                 <div class="alert alert-danger" role="alert">
+                  <h4 class="alert-heading">คุณยังไม่ได้เข้าสู่ระบบ!</h4>
+                  <p>โอ้ะโอ...คุณจำเป็นต้องเข้าสู่ระบบเพื่อดำเนินการแจ้งปัญหา เพื่อที่เราจะได้ทราบปัญหาจากคุณ</p>
+                  <hr></hr>
+                  <p class="mb-0">การเข้าสู่ระบบนั้นสุดแสนจะง่าย ใช้บัญชี Google ของคุณสิ!</p>
+                </div>
+
+                <form onSubmit={this.addUser}>
+                <div className='form-center' >      
+                 
+                  <label for='report'>รายงานปัญหาของคุณ </label>
+                  <textarea
+                  disabled
+                    class ='form-control'
+                    id='report'
+                    type="text"
+                    name="description"
+                    placeholder="กรุณาเข้าสู่ระบบเพื่อรายงานปัญหา"
+                    onChange={this.updateInput}
+                    value={this.state.description}
+                  />
+                
+                    <div className='map-content'>
+                    <label className='text-content' for='map'>ปัญหาของคุณเกิดขึ้นที่ใด</label>
+                    <GoogleMap id='map' {...this.props} />
+                    </div>
+                    <div className='button text-center'>
+                      <button className='btn btn-danger btn-lg' type="submit" onClick={this.send} disabled>กรุณาเข้าสู่ระบบเพื่อรายงานปัญหา</button>
+                    </div>
+              </div>
+              </form>
+
+               </div>
+               
+               }
+          </div>
+          
         
-        
+        </div>
           );
         }
      }
-     export default geolocated({
-      positionOptions: {
-          enableHighAccuracy: false,
-      },
-      userDecisionTimeout: 5000,
-    })(AddData);
+export default geolocated({
+  positionOptions: {
+    enableHighAccuracy: false,
+  },
+  userDecisionTimeout: 5000,
+})(AddData);

@@ -3,23 +3,22 @@ import { db, auth } from '../data/firebase'
 import { Map, Marker, TileLayer } from "react-leaflet";
 import { Icon } from "leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
-// import GoogleMapReact from 'google-map-react'
-
+import NewsContent from './NewsContent';
 import '../CSS/App.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import img from '../img/thairath.png'
+
+
 
 function Mapping() {
     // const [problems, setProblems] = useState(null)
     const [popup, setPopup] = useState(false);
-    console.log(popup)
     const [news_thairath, setNewsthairath] = useState(null);
-
     const map = new Icon({
       iconUrl: "/marker.svg",
-      iconSize: [30, 30]
+      iconSize: [25, 41]
     });
-    
-    
+      
     useEffect(() => {
         db.collection('news_thairath')
         .get()
@@ -34,29 +33,19 @@ function Mapping() {
         .catch(error => console.log(error))
     }, [])
 
-    // useEffect(() => {
-    //   db.collection('problems')
-    //     .get()
-    //     .then(snapshot => {
-    //       const problems_data = []
-    //       snapshot.forEach(doc => {
-    //         const data = doc.data()
-    //         problems_data.push(data)
-    //       })
-    //       setProblems(problems_data.map(el => ({ ...el, popup: false })))
-    //     })
-    //     .catch(error => console.log(error))
-    // }, [])
- 
     return(
         
-        <div className='pl-4 full-screen'>
+        <div className='full-screen'>
         <div className='row mx-0'>
         <h3 className='App-link'>หน้าแรก</h3>
         </div>
-        
+
+        <div className='App-line'>
+        </div>
+
         <div className='row mx-0'>
             <div className='col-8'>
+               
                 <Map center={[13.76, 100.51]} zoom={5}>
                     <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -64,14 +53,14 @@ function Mapping() {
                     />
                     <MarkerClusterGroup>
                     {news_thairath && news_thairath.length !== 0 && news_thairath.map(problem => {
-                         
                         return (
                         
                         <Marker 
                             // key={problem.province}
                             position={[
                             problem.location[0],
-                            problem.location[1]
+                            problem.location[1] 
+                            
                             ]}
                             onClick = {() => 
                             setPopup(problem)}
@@ -90,15 +79,44 @@ function Mapping() {
                 
             </div> 
             <div className='col-4 App-link'>
-            <h4>{popup.name} </h4>
-                <h4>{popup.news_name} </h4> 
-                <h5>{popup.description}</h5>
-                <h6>{popup.provice}</h6>
-                <a href = {popup.news_url}>{popup.news_url}</a>
+            {popup == false && 
+                
+                <div className="card bg-light">
+                <div className="card-header">รายละเอียดของปัญหา</div>
+                 <div className="card-body">
+                 <p className>กรุณาเลือกตำแหน่งของปัญหาบนแผนที่</p>
+                 </div>                
+                 </div>
+            }
+            {popup != false &&
+            <div>
+                
+                    <div className="card card-content-size bg-light">
+                    <div className="card-header">รายละเอียดของปัญหา</div>
+                        {popup.name == 'Thairath' ?
+                        <img className='ml-2 mt-2 news-img' src={img}/>
+                        :
+                        <img className='ml-2 mt-2 news-img' src={popup.photo}/>
+                        }
+                        
+                        <h5 class="card-title ml-3 mt-2">{popup.name} </h5>
+                        <p class="card-subtitle ml-3 text-muted">{popup.person}</p>
+                        <p class='card-text ml-3'>{popup.news_name}</p>
+                        <p class="card-subtitle ml-3  text-muted">{popup.province}</p>
+                        <a class='card-link ml-3 mb-2' href = {popup.news_url}>รายละเอียดเพิ่มเติม...</a>
+                    </div>                   
+                </div>
+           
+    
+            }
+            
                   
-            </div> 
-        </div>
+            </div>
         
+        </div>
+        <div className='row mx-0'>
+        <NewsContent />
+        </div>
         
     </div>
     )
