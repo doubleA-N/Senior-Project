@@ -2,7 +2,7 @@ import React from 'react';
 import '../CSS/Content.css'
 import { db, auth } from '../data/firebase'
 import img from '../img/thairath.png'
-
+import request from 'request'
 
 
 class Content extends React.Component {
@@ -11,7 +11,7 @@ class Content extends React.Component {
         news_thairath:null
     }
     
-    componentDidMount(){
+    async componentDidMount(){
 
         var headers = {
             'Apikey': '370qxEEW5R7gUXPPw0Fo5BtMVU4iIkGo'
@@ -39,8 +39,9 @@ class Content extends React.Component {
 
      const newsData = (await db.collection('news_thairath').get()).docs.map(e => e.data())
 const bullyData = newsData.map((doc) => requestUtil(doc.news_name))
-const mappedBullyData  =  (await Promise.all(bullyData)).map(data => data.bully_type)
-console.log(mappedBullyData)
+const mappedBullyData  =  (await Promise.all(bullyData))
+const merge = newsData.map((e, i) => ({...e, ...mappedBullyData[i] }))
+console.log(merge)
 
     //  .doc()
     //  .get()
@@ -53,8 +54,9 @@ console.log(mappedBullyData)
         //         news_thairath.push(data)
         //     })
             
-            this.setState({news_thairath:news_thairath})
-        }).catch(error => console.log(error))
+        //     this.setState({news_thairath:news_thairath})
+        //     console.log('data', news_thairath)
+        // }).catch(error => console.log(error))
         
         
     }
@@ -80,7 +82,7 @@ console.log(mappedBullyData)
                       {this.state.news_thairath &&
                       this.state.news_thairath.map( content =>{
                         
-                        var request = require('request');
+                        // var request = require('request');
                         var headers = {
                             'Apikey': '370qxEEW5R7gUXPPw0Fo5BtMVU4iIkGo'
                         };
@@ -91,6 +93,7 @@ console.log(mappedBullyData)
                             headers: headers,
                             body: dataString
                         };
+
                       var bully ='';
                         function callback(error, response, body) {
                             if (!error && response.statusCode == 200) {
