@@ -33,7 +33,7 @@ class Content extends React.Component {
             const _options = {...options, body}
             request(_options, (err, res, body) => {
                 if(err) return reject(err)
-                resolve(body)
+                resolve(JSON.parse(body))
             })
         })
 
