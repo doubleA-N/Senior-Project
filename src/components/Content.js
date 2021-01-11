@@ -28,7 +28,14 @@ class Content extends React.Component {
             }
         })
 
-       
+        const requestUtil = (news_name) => new Promise((resolve, reject) => {
+            const body = 'text='+news_name     
+            const _options = {...options, body}
+            request(_options, (err, res, body) => {
+                if(err) return reject(err)
+                resolve(body)
+            })
+        })
 
      const newsData = (await db.collection('news_thairath').get()).docs.map(e => e.data())
 const bullyData = newsData.map((doc) => request())
