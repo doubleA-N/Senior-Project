@@ -13,6 +13,15 @@ class Content extends React.Component {
     
     componentDidMount(){
 
+        var headers = {
+            'Apikey': '370qxEEW5R7gUXPPw0Fo5BtMVU4iIkGo'
+        };
+        var options = {
+            url: 'https://api.aiforthai.in.th/bully',
+            method: 'POST',
+            headers: headers,
+        };
+
         auth.onAuthStateChanged((user) => {
             if (user) {
               this.setState({user})
