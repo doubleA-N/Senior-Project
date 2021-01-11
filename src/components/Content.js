@@ -70,6 +70,7 @@ class Content extends React.Component {
                 <div className="card-header">ปัญหาทั้งหมด</div>
                 {this.state.news_thairath &&
                   this.state.news_thairath.map((content) => {
+                    console.log(content);
                     return (
                       <div className="card-body pt-3 pb-0">
                         {content.name == "Thairath" ? (
