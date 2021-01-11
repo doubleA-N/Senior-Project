@@ -11,6 +11,8 @@ import analyze from '../img/analytics.png';
 import user from '../img/user-profile (1).png';
 import { auth, provider } from '../data/firebase';
 
+// const history = useHistory();
+
 class sidebar extends React.Component {
     constructor(props) {
         super(props);
@@ -23,6 +25,7 @@ class sidebar extends React.Component {
       handleChange(e){
   
       }
+
   
       logout(){
           auth.signOut()
@@ -30,6 +33,7 @@ class sidebar extends React.Component {
               this.setState({
                   user:null                
               });
+              
           })
       }
       login() {
@@ -37,8 +41,7 @@ class sidebar extends React.Component {
           .then((result => {
               const user = result.user;
               this.setState({
-                  user,
-                  
+                  user, 
               });
           }))
       }

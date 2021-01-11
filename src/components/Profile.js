@@ -45,7 +45,7 @@ class Profile extends React.Component {
                   <h4 class="alert-heading">ยินดีต้อนรับ!</h4>
                   <p>โปรไฟล์ของคุณที่จะปรากฏแก่สาธารณะจะมีเพียงแค่ชื่อและรูปภาพเท่านั้น</p>
                   <hr></hr>
-                  <p class="mb-0">มั่นในได้เลยว่าข้อมูลของคุณจะปลอดภัย!</p>
+                  <p class="mb-0">มั่นใจได้เลยว่าข้อมูลของคุณจะปลอดภัย!</p>
                 </div>
 
                 <div className='row'> 
@@ -78,6 +78,7 @@ class Profile extends React.Component {
                                         <img className='news-img' src={content.photo}/>
                                         <p className='news'>{content.name}</p>
                                         <p className='mt-1'>{content.news_name}</p>
+                                        <p class="card-subtitle ">ประเภทของปัญหา: {content.topic}</p>
                                         <hr className='mb-0 mt-0 hr-news'></hr>
                                         </div>                                   
                                     </div>

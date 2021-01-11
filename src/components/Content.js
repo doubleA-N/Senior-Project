@@ -4,12 +4,15 @@ import { db, auth } from '../data/firebase'
 import img from '../img/thairath.png'
 
 
+
 class Content extends React.Component {
+    
     state = {
         news_thairath:null
     }
     
     componentDidMount(){
+
         auth.onAuthStateChanged((user) => {
             if (user) {
               this.setState({user})
@@ -17,7 +20,6 @@ class Content extends React.Component {
         })
 
         db.collection('news_thairath')
-   
         .get()
         .then( snapshot => {
             const news_thairath = []
@@ -28,6 +30,8 @@ class Content extends React.Component {
             
             this.setState({news_thairath:news_thairath})
         }).catch(error => console.log(error))
+        
+        
     }
     
  render(){
@@ -51,19 +55,40 @@ class Content extends React.Component {
                       {this.state.news_thairath &&
                       this.state.news_thairath.map( content =>{
                         
-                          return(
-                                  
+                        var request = require('request');
+                        var headers = {
+                            'Apikey': '370qxEEW5R7gUXPPw0Fo5BtMVU4iIkGo'
+                        };
+                        var dataString = 'text='+content.news_name     
+                        var options = {
+                            url: 'https://api.aiforthai.in.th/bully',
+                            method: 'POST',
+                            headers: headers,
+                            body: dataString
+                        };
+                      var bully ='';
+                        function callback(error, response, body) {
+                            if (!error && response.statusCode == 200) {
+                                bully = JSON.parse(body);
+                                                             
+                               console.log(bully.bully_type)
+                            }
+                            
+                        }
+                        request(options, callback)
+                          return(                                 
                                   <div className="card-body pt-3 pb-0">
                                   {content.name == 'Thairath' ?
                                   <img className='news-img' src={img}/>
                                   :
                                   <img className='news-img' src={content.photo}/>
-                                  }                                 
+                                  }       
                                   <p className='name'>{content.name}</p>
                                   <p className='mt-1 mb-1'>{content.news_name}</p>
                                   <p className='card-subtitle mt-1'>{content.province}</p>
+                                  <p class="card-subtitle text-muted">ประเภทของปัญหา: {content.topic}</p>
                                   {content.news_url &&
-                                  <h6> <a href={content.news_url}>คลิ๊กที่นี่เพื่อดูรายละเอียด</a></h6>
+                                  <h6> <a href={content.news_url}>คลิกที่นี่เพื่อดูรายละเอียด</a></h6>
                                   }
                                   <hr className='mb-0 mt-0'></hr>
                                   </div>                
@@ -110,3 +135,9 @@ class Content extends React.Component {
 }
     
 export default Content;
+
+
+
+
+
+

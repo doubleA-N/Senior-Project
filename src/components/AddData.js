@@ -6,20 +6,23 @@ import GoogleMap from './GoogleMap';
 import { geolocated } from "react-geolocated";
 
 
-let id = Math.random()*100
-
 class AddData extends React.Component {
     constructor() {
         super();
         this.state = {
-          user: null,
+          // posts: [],
+          // errMsg: '',
+         user: null,
          name: "",
          description: "",
-         currentPos: null
+
+        //  currentPos: null
         };
-        this.handleClick = this.handleClick.bind(this);
+      //  this.handleClick = this.handleClick.bind(this);
       }
+
       componentDidMount() {
+        
         auth.onAuthStateChanged((user) => {
           if (user) {
             this.setState({user})
@@ -31,10 +34,10 @@ class AddData extends React.Component {
         alert("คุณได้แจ้งปัญหาเรียบร้อยแล้ว");
       }
     
-    handleClick(e){
-        this.setState({ currentPos: e.latlng });
-        console.log(e.latlng)
-    }
+    // handleClick(e){
+    //     this.setState({ currentPos: e.latlng });
+    //     console.log(e.latlng)
+    // }
     updateInput = e => {
         this.setState({
             [e.target.name]: e.target.value

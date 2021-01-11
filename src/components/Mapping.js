@@ -102,8 +102,11 @@ function Mapping() {
                         <h5 class="card-title ml-3 mt-2">{popup.name} </h5>
                         <p class="card-subtitle ml-3 text-muted">{popup.person}</p>
                         <p class='card-text ml-3'>{popup.news_name}</p>
+                        <p class="card-subtitle ml-3 mb-1 text-muted">ประเภทของปัญหา:{popup.topic}</p>
                         <p class="card-subtitle ml-3  text-muted">{popup.province}</p>
+                        {popup.news_url &&
                         <a class='card-link ml-3 mb-2' href = {popup.news_url}>รายละเอียดเพิ่มเติม...</a>
+                        }
                     </div>                   
                 </div>
            

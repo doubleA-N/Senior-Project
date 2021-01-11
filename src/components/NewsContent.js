@@ -41,7 +41,9 @@ class NewsContent extends React.Component{
                                 }
                                 <p className='news'>{content.name}</p>
                                 <p className='mt-1'>{content.news_name}</p>
-                                <a className='link' href={content.news_url}>คลิ๊กที่นี่เพื่อดูรายละเอียด</a>
+                                <p className='card-subtitle'>ประเภทของปัญหา: {content.topic}</p>
+                                <p className='mt-1'>{content.province}</p>
+                                <a className='link' href={content.news_url}>คลิกที่นี่เพื่อดูรายละเอียด</a>
                                 <hr className='mb-0 mt-0 hr-news'></hr>
                                 </div>                
                             
