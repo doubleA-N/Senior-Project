@@ -70,27 +70,6 @@ class Content extends React.Component {
                 <div className="card-header">ปัญหาทั้งหมด</div>
                 {this.state.news_thairath &&
                   this.state.news_thairath.map((content) => {
-                    // var request = require('request');
-                    var headers = {
-                      Apikey: "370qxEEW5R7gUXPPw0Fo5BtMVU4iIkGo",
-                    };
-                    var dataString = "text=" + content.news_name;
-                    var options = {
-                      url: "https://api.aiforthai.in.th/bully",
-                      method: "POST",
-                      headers: headers,
-                      body: dataString,
-                    };
-
-                    var bully = "";
-                    function callback(error, response, body) {
-                      if (!error && response.statusCode == 200) {
-                        bully = JSON.parse(body);
-
-                        console.log(bully.bully_type);
-                      }
-                    }
-                    request(options, callback);
                     return (
                       <div className="card-body pt-3 pb-0">
                         {content.name == "Thairath" ? (
