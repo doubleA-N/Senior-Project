@@ -40,9 +40,9 @@ class Content extends React.Component {
      const newsData = (await db.collection('news_thairath').get()).docs.map(e => e.data())
 const bullyData = newsData.map((doc) => requestUtil(doc.news_name))
 const mappedBullyData  =  (await Promise.all(bullyData))
-const merge = newsData.map((e, i) => ({...e, ...mappedBullyData[i] }))
+const merge = newsData.map((e, i) => ({...e, ...mappedBullyData[i] })).map(e =>( {...e, key: e.id}))
 console.log(merge)
-
+this.setState({news_thairath:merge})
     //  .doc()
     //  .get()
     //  .
