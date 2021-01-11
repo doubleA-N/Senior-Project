@@ -38,7 +38,9 @@ class Content extends React.Component {
         })
 
      const newsData = (await db.collection('news_thairath').get()).docs.map(e => e.data())
-const bullyData = newsData.map((doc) => request())
+const bullyData = newsData.map((doc) => requestUtil(doc.news_name))
+const mappedBullyData  =  (await Promise.all(bullyData)).map(data => data.bully_type)
+console.log(mappedBullyData)
 
     //  .doc()
     //  .get()
