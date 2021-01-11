@@ -19,14 +19,21 @@ class Content extends React.Component {
             }
         })
 
-        db.collection('news_thairath')
-        .get()
-        .then( snapshot => {
-            const news_thairath = []
-            snapshot.forEach(doc => {
-                const data = doc.data()
-                news_thairath.push(data)
-            })
+       
+
+     const newsData = (await db.collection('news_thairath').get()).docs.map(e => e.data())
+const bullyData = newsData.map((doc) => request())
+
+    //  .doc()
+    //  .get()
+    //  .
+    //  console.log('data', data)
+        // .then( snapshot => {
+        //     const news_thairath = []
+        //     snapshot.forEach(doc => {
+        //         const data = doc.data()
+        //         news_thairath.push(data)
+        //     })
             
             this.setState({news_thairath:news_thairath})
         }).catch(error => console.log(error))
