@@ -70,7 +70,7 @@ class Content extends React.Component {
                 <div className="card-header">ปัญหาทั้งหมด</div>
                 {this.state.news_thairath &&
                   this.state.news_thairath.map((content) => {
-                    console.log(content);
+                   // console.log('test'+content);
                     return (
                       <div className="card-body pt-3 pb-0">
                         {content.name == "Thairath" ? (
@@ -80,10 +80,23 @@ class Content extends React.Component {
                         )}
                         <p className="name">{content.name}</p>
                         <p className="mt-1 mb-1">{content.news_name}</p>
+                        {
+                            content.bully_type == 0 ? (
+                                <p class="card-subtitle text-muted">
+                                ผลจากการวิเคราะห์เนื้อหาจาก Ai for Thai: ไม่มีเนื้อหาเชิงไม่เหมาะสม
+                            </p>
+                            ) : (
+                                <p class="card-subtitle text-muted">
+                                ผลจากการวิเคราะห์เนื้อหาจาก Ai for Thai: มีเนื้อหาคำพูดในลักษณะไม่เหมาะสม
+                                </p>
+                            )
+                        
+                        }
                         <p className="card-subtitle mt-1">{content.province}</p>
                         <p class="card-subtitle text-muted">
                           ประเภทของปัญหา: {content.topic}
                         </p>
+                                               
                         {content.news_url && (
                           <h6>
                             {" "}

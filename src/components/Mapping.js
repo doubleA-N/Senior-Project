@@ -18,7 +18,7 @@ function Mapping() {
       iconUrl: "/marker.svg",
       iconSize: [25, 41]
     });
-      
+     
     useEffect(() => {
         db.collection('news_thairath')
         .get()
@@ -32,7 +32,8 @@ function Mapping() {
         })
         .catch(error => console.log(error))
     }, [])
-
+    
+    
     return(
         
         <div className='full-screen'>
@@ -51,18 +52,23 @@ function Mapping() {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     />
-                    <MarkerClusterGroup>
+                    <MarkerClusterGroup
+                    
+                    >
+                    
                     {news_thairath && news_thairath.length !== 0 && news_thairath.map(problem => {
                         return (
                         
                         <Marker 
-                            // key={problem.province}
+                            
+                            //key={problem.province}
                             position={[
                             problem.location[0],
                             problem.location[1] 
                             
                             ]}
                             onClick = {() => 
+                            
                             setPopup(problem)}
                             
                             onClose={() => {

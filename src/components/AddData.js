@@ -32,6 +32,7 @@ class AddData extends React.Component {
 
       send() {
         alert("คุณได้แจ้งปัญหาเรียบร้อยแล้ว");
+        window.location = '/Profile';
       }
     
     // handleClick(e){

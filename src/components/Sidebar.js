@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router} from 'react-router-dom';
+import { BrowserRouter as Router, Redirect} from 'react-router-dom';
 import '../CSS/App.css';
 import '../CSS/Sidebar.css';
 import img from '../img/profile-user.png';
@@ -33,7 +33,7 @@ class sidebar extends React.Component {
               this.setState({
                   user:null                
               });
-              
+           
           })
       }
       login() {
@@ -70,7 +70,7 @@ class sidebar extends React.Component {
                         <a className ='sidebar-link' href="#"><img className ='logo' src={analyze}/>วิเคราะห์ปัญหา</a>
                         <a className ='sidebar-link' href="/Profile"><img className ='logo' src={user}/>โปรไฟล์ของคุณ</a>
                         </div>
-                        <a className='button-logout' onClick={this.logout}>ออกจากระบบ</a>
+                        <a className='button-logout' href="/" onClick={this.logout}>ออกจากระบบ</a>
                         </div>
                         :
                         <div>
