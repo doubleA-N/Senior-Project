@@ -9,7 +9,7 @@ from pythainlp.corpus import thai_stopwords
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.decomposition import TruncatedSVD
 import scipy.sparse as sp
-from itertools import chain
+from itertools import chain 
 import pandas as pd
 import xlrd
 
