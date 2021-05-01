@@ -1,7 +1,8 @@
 import React from 'react';
 import { db, auth } from '../data/firebase'
+import Trending from './Trending';
+import Filtering from './Filtering';
 import img from '../img/thairath.png'
-
 import '../CSS/NewsContent.css'
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -41,7 +42,42 @@ class NewsContent extends React.Component{
                                 }
                                 <p className='news'>{content.name}</p>
                                 <p className='mt-1'>{content.news_name}</p>
-                                <p className='card-subtitle'>ประเภทของปัญหา: {content.topic}</p>
+                                {content.news_name.includes("ฝุ่น") || content.news_name.includes("ฝนตก") ||
+                        content.news_name.includes("ร้อน") || content.news_name.includes("หนาว") ||
+                        content.news_name.includes("อากาศ")?
+                                <p className='card-subtitle'>ประเภทของปัญหา: สภาพแวดล้อม</p>                               
+                                :                               
+                                content.news_name.includes("แทง") || content.news_name.includes("ยิง") || 
+                                content.news_name.includes("โจร") || content.news_name.includes("ฆ่า") ||
+                                content.news_name.includes("ปล้น") || content.news_name.includes("ชิง") ||
+                                content.news_name.includes("ข่มขืน") || content.news_name.includes("โกง")?
+                                  <p className='card-subtitle'>ประเภทของปัญหา:อาชญากรรม </p>
+                                  :
+                                    content.news_name.includes("ไฟไหม้") || content.news_name.includes("น้ำท่วม") 
+                                    || content.news_name.includes("น้ำป่าไหลหลาก")?
+                                    <p className='card-subtitle'>ประเภทของปัญหา: ภัยพิบัติ </p>
+                                    :
+                                      content.news_name.includes("โควิด") || content.news_name.includes("covid")?
+                                      <p className='card-subtitle'>ประเภทของปัญหา: COVID-19 </p>
+                                      :
+                                        content.news_name.includes("รถติด") || content.news_name.includes("จราจร")?
+                                        <p className='card-subtitle'>ประเภทของปัญหา: การจราจร </p>
+                                        :
+                                          content.news_name.includes("เลือกตั้ง") || content.news_name.includes("ม็อบ") ||
+                                          content.news_name.includes("นายก") || content.news_name.includes("รัฐ")?
+                                          <p className='card-subtitle'>ประเภทของปัญหา: การเมือง </p>
+                                          :
+                                          content.news_name.includes("เลือกตั้ง") || content.news_name.includes("ม็อบ") ||
+                                          content.news_name.includes("นายก") || content.news_name.includes("รัฐ")?
+                                          <p className='card-subtitle'>ประเภทของปัญหา: การเมือง </p>
+                                            :
+                                            content.news_name.includes("รถชน") || content.news_name.includes("ล้ม") ||
+                                            content.news_name.includes("คว่ำ")?
+                                            <p className='card-subtitle'>ประเภทของปัญหา: อุบัติเหตุ </p>
+                                              :
+                                              <p className='card-subtitle'>ประเภทของปัญหา: ข่าวสังคม </p>
+
+                        }                
                                 <p className='mt-1'>{content.province}</p>
                                 <a className='link' href={content.news_url}>คลิกที่นี่เพื่อดูรายละเอียด</a>
                                 <hr className='mb-0 mt-0 hr-news'></hr>
@@ -52,30 +88,8 @@ class NewsContent extends React.Component{
                     </div>
                 </div>
                 <div className='col-4'>
-                <div className="card bg-light mt-3">
-                    <div className="card-header">คัดเลือกข้อมูลของปัญหา</div>
-                        <p class='card-text ml-4 mt-2'></p>
-                        <p class='card-text ml-4 mt-2'></p>
-                        <p class='card-text ml-4 mt-2'></p>
-                        <p class='card-text ml-4 mt-2'></p>
-                        <p class='card-text ml-4 mt-2'></p>
-                        
-                    </div> 
-
-                <div className="card bg-light mt-3">
-                    <div className="card-header">หัวข้อที่เป็นที่นิยม</div>
-                        <p class='card-text ml-4 mt-2'>#1</p>
-                        <hr className='mb-0 mt-0'></hr>
-                        <p class='card-text ml-4 mt-2'>#2</p>
-                        <hr className='mb-0 mt-0'></hr>
-                        <p class='card-text ml-4 mt-2'>#3</p>
-                        <hr className='mb-0 mt-0'></hr>
-                        <p class='card-text ml-4 mt-2'>#4</p>
-                        <hr className='mb-0 mt-0'></hr>
-                        <p class='card-text ml-4 mt-2'>#5</p>
-                        <hr className='mb-0 mt-0'></hr>
-                        
-                    </div>       
+                    <Filtering/>
+                    <Trending/>
                 </div>
                 
             </div>

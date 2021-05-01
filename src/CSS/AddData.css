@@ -1,3 +1,13 @@
+.Adddata-main {
+    font-family: 'Prompt', sans-serif;
+    font-weight: 600;
+    background-color: #f1f1f1;
+    margin-top: 0px;
+    display: flex;
+    width: 100vh;
+    height: 100vh;
+}
+
 .button {
     /* margin: 0; */
     justify-content: center;
@@ -24,6 +34,17 @@
     margin-bottom: 0px;
 }
 
+.text-content {
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.text-warn {
+    color: #e4432f;
+    font-size: small;
+}
+
 .center {
     display: flex;
     justify-content: center;
@@ -35,8 +56,9 @@
 .map {
     height: 400px;
     width: 700px;
+    z-index: 0;
     /* margin-left: 300px; */
-    /* margin-top: 20px; */
+    margin-top: 1px;
 }
 
 .form-center {

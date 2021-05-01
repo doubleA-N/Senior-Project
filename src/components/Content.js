@@ -1,4 +1,6 @@
 import React from "react";
+import Tranding from './Trending'
+import Filtering from './Filtering'
 import "../CSS/Content.css";
 import { db, auth } from "../data/firebase";
 import img from "../img/thairath.png";
@@ -25,26 +27,38 @@ class Content extends React.Component {
       }
     });
 
-    const requestUtil = (news_name) =>
-      new Promise((resolve, reject) => {
-        const body = "text=" + news_name;
-        const _options = { ...options, body };
-        request(_options, (err, res, body) => {
-          if (err) return reject(err);
-          resolve(JSON.parse(body));
-        });
-      });
+    // const requestUtil = (news_name) =>
+    //   new Promise((resolve, reject) => {
+    //     const body = "text=" + news_name;
+    //     const _options = { ...options, body };
+    //     request(_options, (err, res, body) => {
+    //       if (err) return reject(err);
+    //       resolve(JSON.parse(body));
+    //     });
+    //   });
 
-    const newsData = (
-      await db.collection("news_thairath").get()
-    ).docs.map((e) => e.data());
-    const bullyData = newsData.map((doc) => requestUtil(doc.news_name));
-    const mappedBullyData = await Promise.all(bullyData);
-    const merge = newsData
-      .map((e, i) => ({ ...e, ...mappedBullyData[i] }))
-      .map((e) => ({ ...e, key: e.id }));
-    console.log(merge);
-    this.setState({ news_thairath: merge });
+    // const newsData = (
+    //   await db.collection("news_thairath").get()
+    // ).docs.map((e) => e.data());
+    // const bullyData = newsData.map((doc) => requestUtil(doc.news_name));
+    // const mappedBullyData = await Promise.all(bullyData);
+    // const merge = newsData
+    //   .map((e, i) => ({ ...e, ...mappedBullyData[i] }))
+    //   .map((e) => ({ ...e, key: e.id }));
+    // console.log(merge);
+    // this.setState({ news_thairath: merge });
+    db.collection('news_thairath')
+    
+    .orderBy("news_date", "desc")
+        .get()
+        .then( snapshot => {
+            const news_thairath = []
+            snapshot.forEach(doc => {
+                const data = doc.data()
+                news_thairath.push(data)
+            })
+            this.setState({news_thairath:news_thairath})
+        }).catch(error => console.log(error))
   }
 
   render() {
@@ -70,7 +84,7 @@ class Content extends React.Component {
                 <div className="card-header">ปัญหาทั้งหมด</div>
                 {this.state.news_thairath &&
                   this.state.news_thairath.map((content) => {
-                   // console.log('test'+content);
+                  
                     return (
                       <div className="card-body pt-3 pb-0">
                         {content.name == "Thairath" ? (
@@ -80,31 +94,52 @@ class Content extends React.Component {
                         )}
                         <p className="name">{content.name}</p>
                         <p className="mt-1 mb-1">{content.news_name}</p>
-                        {
-                            content.bully_type == 0 ? (
-                                <p class="card-subtitle text-muted">
-                                ผลจากการวิเคราะห์เนื้อหาจาก Ai for Thai: ไม่มีเนื้อหาเชิงไม่เหมาะสม
-                            </p>
-                            ) : (
-                                <p class="card-subtitle text-muted">
-                                ผลจากการวิเคราะห์เนื้อหาจาก Ai for Thai: มีเนื้อหาคำพูดในลักษณะไม่เหมาะสม
-                                </p>
-                            )
-                        
-                        }
                         <p className="card-subtitle mt-1">{content.province}</p>
-                        <p class="card-subtitle text-muted">
-                          ประเภทของปัญหา: {content.topic}
-                        </p>
-                                               
+                        {content.news_name.includes("ฝุ่น") || content.news_name.includes("ฝนตก") ||
+                        content.news_name.includes("ร้อน") || content.news_name.includes("หนาว") ||
+                        content.news_name.includes("อากาศ")?
+                                <p className='card-subtitle'>ประเภทของปัญหา: สภาพแวดล้อม</p>                               
+                                :                               
+                                content.news_name.includes("แทง") || content.news_name.includes("ยิง") || 
+                                content.news_name.includes("โจร") || content.news_name.includes("ฆ่า") ||
+                                content.news_name.includes("ปล้น") || content.news_name.includes("ชิง") ||
+                                content.news_name.includes("ข่มขืน") || content.news_name.includes("โกง")?
+                                  <p className='card-subtitle'>ประเภทของปัญหา:อาชญากรรม </p>
+                                  :
+                                    content.news_name.includes("ไฟไหม้") || content.news_name.includes("น้ำท่วม") 
+                                    || content.news_name.includes("น้ำป่าไหลหลาก")?
+                                    <p className='card-subtitle'>ประเภทของปัญหา: ภัยพิบัติ </p>
+                                    :
+                                      content.news_name.includes("โควิด") || content.news_name.includes("covid")?
+                                      <p className='card-subtitle'>ประเภทของปัญหา: COVID-19 </p>
+                                      :
+                                        content.news_name.includes("รถติด") || content.news_name.includes("จราจร")?
+                                        <p className='card-subtitle'>ประเภทของปัญหา: การจราจร </p>
+                                        :
+                                          content.news_name.includes("เลือกตั้ง") || content.news_name.includes("ม็อบ") ||
+                                          content.news_name.includes("นายก") || content.news_name.includes("รัฐ")?
+                                          <p className='card-subtitle'>ประเภทของปัญหา: การเมือง </p>
+                                          :
+                                          content.news_name.includes("เลือกตั้ง") || content.news_name.includes("ม็อบ") ||
+                                          content.news_name.includes("นายก") || content.news_name.includes("รัฐ")?
+                                          <p className='card-subtitle'>ประเภทของปัญหา: การเมือง </p>
+                                            :
+                                            content.news_name.includes("รถชน") || content.news_name.includes("ล้ม") ||
+                                            content.news_name.includes("คว่ำ")?
+                                            <p className='card-subtitle'>ประเภทของปัญหา: อุบัติเหตุ </p>
+                                              :
+                                              <p className='card-subtitle'>ประเภทของปัญหา: ข่าวสังคม </p>
+
+                        }                
                         {content.news_url && (
                           <h6>
-                            {" "}
+                            
                             <a href={content.news_url}>
                               คลิกที่นี่เพื่อดูรายละเอียด
                             </a>
                           </h6>
                         )}
+                        <p className='time'>{content.news_date}</p>
                         <hr className="mb-0 mt-0"></hr>
                       </div>
                     );
@@ -112,28 +147,8 @@ class Content extends React.Component {
               </div>
             </div>
             <div className="col-4">
-              <div className="card bg-light mt-3">
-                <div className="card-header">คัดเลือกข้อมูลของปัญหา</div>
-                <p class="card-text ml-4 mt-2"></p>
-                <p class="card-text ml-4 mt-2"></p>
-                <p class="card-text ml-4 mt-2"></p>
-                <p class="card-text ml-4 mt-2"></p>
-                <p class="card-text ml-4 mt-2"></p>
-              </div>
-
-              <div className="card bg-light mt-3">
-                <div className="card-header">หัวข้อที่เป็นที่นิยม</div>
-                <p class="card-text ml-4 mt-2">#1</p>
-                <hr className="mb-0 mt-0"></hr>
-                <p class="card-text ml-4 mt-2">#2</p>
-                <hr className="mb-0 mt-0"></hr>
-                <p class="card-text ml-4 mt-2">#3</p>
-                <hr className="mb-0 mt-0"></hr>
-                <p class="card-text ml-4 mt-2">#4</p>
-                <hr className="mb-0 mt-0"></hr>
-                <p class="card-text ml-4 mt-2">#5</p>
-                <hr className="mb-0 mt-0"></hr>
-              </div>
+              <Filtering />
+              <Tranding />
             </div>
           </div>
         </div>

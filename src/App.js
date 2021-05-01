@@ -6,6 +6,7 @@ import Mapping from './components/Mapping';
 import AddData from './components/AddData';
 import { BrowserRouter as Router, Switch, Route, BrowserRouter} from 'react-router-dom';
 import Content from './components/Content';
+import Visualize from './components/Visualize';
 import Profile from './components/Profile';
 
 
@@ -23,7 +24,9 @@ function App() {
         <Route path='/' exact component={Mapping} />
         <Route path='/AddData' exact component={AddData} />
         <Route path='/Content' exact component={Content} />
+        <Route path='/Visualize' exact component={Visualize}/>
         <Route path='/Profile' exact component={Profile} />
+
       </Switch>  
     </div>
   </div> 

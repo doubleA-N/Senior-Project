@@ -67,8 +67,9 @@ class sidebar extends React.Component {
                         <a className ='sidebar-link' href="/"><img className ='logo' src={folder}/>หน้าแรก</a>
                         <a className='sidebar-link' href='/AddData'><img className ='logo' src={report}/>แจ้งปัญหา</a>
                         <a className ='sidebar-link' href="/Content"><img className ='logo' src={list}/>ดูข้อมูลของปัญหา</a>
-                        <a className ='sidebar-link' href="#"><img className ='logo' src={analyze}/>วิเคราะห์ปัญหา</a>
+                        <a className ='sidebar-link' href="/Visualize"><img className ='logo' src={analyze}/>วิเคราะห์ปัญหา</a>
                         <a className ='sidebar-link' href="/Profile"><img className ='logo' src={user}/>โปรไฟล์ของคุณ</a>
+
                         </div>
                         <a className='button-logout' href="/" onClick={this.logout}>ออกจากระบบ</a>
                         </div>
@@ -81,7 +82,7 @@ class sidebar extends React.Component {
                         <a className ='sidebar-link' href="/"><img className ='logo' src={folder}/>หน้าแรก</a>
                         <a className='sidebar-link' href='/AddData'><img className ='logo' src={report}/>แจ้งปัญหา</a>
                         <a className ='sidebar-link' href="/Content"><img className ='logo' src={list}/>ดูข้อมูลของปัญหา</a>
-                        <a className ='sidebar-link' href="#"><img className ='logo' src={analyze}/>วิเคราะห์ปัญหา</a>
+                        <a className ='sidebar-link' href="/Visualize"><img className ='logo' src={analyze}/>วิเคราะห์ปัญหา</a>
                         <a className ='sidebar-link' href="/Profile"><img className ='logo' src={user}/>โปรไฟล์ของคุณ</a>
                         </div>
                         </div>

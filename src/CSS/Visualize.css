@@ -1,0 +1,22 @@
+.visual-main {
+    /* font-family: 'Prompt', sans-serif;
+    font-weight: 600;
+    background-color: #f1f1f1;
+    margin-top: 0px;
+    display: flex; */
+    width: 100vh;
+    height: 100vh;
+}
+
+.center-img {
+    margin-left: 230px;
+    margin-top: 70px;
+}
+
+.chart_container1 {
+    float: left;
+}
+
+.chart_container2 {
+    float: right;
+}
