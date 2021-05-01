@@ -88,7 +88,7 @@ class NewsContent extends React.Component{
                     </div>
                 </div>
                 <div className='col-4'>
-                    <Filtering/>
+                    {/* <Filtering/> */}
                     <Trending/>
                 </div>
                 

@@ -112,42 +112,7 @@ function Mapping() {
                         <h5 class="card-title ml-3 mt-2 mr-3">{popup.name} </h5>
                         <p class="card-subtitle ml-3 text-muted">{popup.person}</p>
                         <p class='card-text ml-3'>{popup.news_name}</p>
-                        {popup.news_name.includes("ฝุ่น") || popup.news_name.includes("ฝนตก") ||
-                        popup.news_name.includes("ร้อน") || popup.news_name.includes("หนาว") ||
-                        popup.news_name.includes("อากาศ")?
-                                <p className='card-subtitle ml-3 mb-2 mr-3'>ประเภทของปัญหา: สภาพแวดล้อม</p>                               
-                                :                               
-                                popup.news_name.includes("แทง") || popup.news_name.includes("ยิง") || 
-                                popup.news_name.includes("โจร") || popup.news_name.includes("ฆ่า") ||
-                                popup.news_name.includes("ปล้น") || popup.news_name.includes("ชิง") ||
-                                popup.news_name.includes("ข่มขืน") || popup.news_name.includes("โกง")?
-                                  <p className='card-subtitle ml-3 mb-2 mr-3'>ประเภทของปัญหา: อาชญากรรม </p>
-                                  :
-                                  popup.news_name.includes("ไฟไหม้") || popup.news_name.includes("น้ำท่วม") 
-                                    || popup.news_name.includes("น้ำป่าไหลหลาก")?
-                                    <p className='card-subtitle ml-3 mb-2 mr-3'>ประเภทของปัญหา: ภัยพิบัติ </p>
-                                    :
-                                    popup.news_name.includes("โควิด") || popup.news_name.includes("covid")?
-                                      <p className='card-subtitle ml-3 mb-2 mr-3'>ประเภทของปัญหา: COVID-19 </p>
-                                      :
-                                      popup.news_name.includes("รถติด") || popup.news_name.includes("จราจร")?
-                                        <p className='card-subtitle ml-3 mb-2 mr-3'>ประเภทของปัญหา: การจราจร </p>
-                                        :
-                                        popup.news_name.includes("เลือกตั้ง") || popup.news_name.includes("ม็อบ") ||
-                                        popup.news_name.includes("นายก") || popup.news_name.includes("รัฐ")?
-                                          <p className='card-subtitle ml-3 mb-2 mr-3'>ประเภทของปัญหา: การเมือง </p>
-                                          :
-                                          popup.news_name.includes("เลือกตั้ง") || popup.news_name.includes("ม็อบ") ||
-                                          popup.news_name.includes("นายก") || popup.news_name.includes("รัฐ")?
-                                          <p className='card-subtitle ml-3 mb-2 mr-3'>ประเภทของปัญหา: การเมือง </p>
-                                            :
-                                            popup.news_name.includes("รถชน") || popup.news_name.includes("ล้ม") ||
-                                            popup.news_name.includes("คว่ำ")?
-                                            <p className='card-subtitle ml-3 mb-2 mr-3'>ประเภทของปัญหา: อุบัติเหตุ </p>
-                                              :
-                                              <p className='card-subtitle ml-3 mb-2 mr-3'>ประเภทของปัญหา: ข่าวสังคม </p>
-
-                        }
+                        <p className='card-subtitle ml-3 mb-2 mr-3'>ประเภทของปัญหาหลังจากการทำนายด้วย AI: {popup.topic}</p>
                         <p class="card-subtitle ml-3  text-muted">{popup.province}</p>
                         {popup.news_url &&
                         <a class='card-link ml-3 mb-2' href = {popup.news_url}>รายละเอียดเพิ่มเติม...</a>

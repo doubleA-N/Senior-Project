@@ -129,49 +129,12 @@ class Profile extends React.Component {
                                         <p className='mt-1 mb-2'>{content.data.news_name}<img className='bin-button' title='ลบปัญหานี้' src={bin} 
                                         onClick={() => this.removeData(content.id)}
                                         /></p>
-                                        {content.data.news_name.includes("ฝุ่น") || content.data.news_name.includes("ฝนตก") ||
-                                        content.data.news_name.includes("ร้อน") || content.data.news_name.includes("หนาว") ||
-                                        content.data.news_name.includes("อากาศ")?
-                                                <p className='card-subtitle'>ประเภทของปัญหา: สภาพแวดล้อม</p>                               
-                                                :                               
-                                              content.data.news_name.includes("แทง") || content.data.news_name.includes("ยิง") || 
-                                              content.data.news_name.includes("โจร") || content.data.news_name.includes("ฆ่า") ||
-                                              content.data.news_name.includes("ปล้น") || content.data.news_name.includes("ชิง") ||
-                                              content.data.news_name.includes("ข่มขืน") || content.data.news_name.includes("โกง")?
-                                                <p className='card-subtitle'>ประเภทของปัญหา:อาชญากรรม </p>
-                                                :
-                                                  content.data.news_name.includes("ไฟไหม้") || content.data.news_name.includes("น้ำท่วม") 
-                                                  || content.data.news_name.includes("น้ำป่าไหลหลาก")?
-                                                  <p className='card-subtitle'>ประเภทของปัญหา: ภัยพิบัติ </p>
-                                                  :
-                                                    content.data.news_name.includes("โควิด") || content.data.news_name.includes("covid")?
-                                                    <p className='card-subtitle'>ประเภทของปัญหา: COVID-19 </p>
-                                                    :
-                                                      content.data.news_name.includes("รถติด") || content.data.news_name.includes("จราจร")?
-                                                      <p className='card-subtitle'>ประเภทของปัญหา: การจราจร </p>
-                                                      :
-                                                        content.data.news_name.includes("เลือกตั้ง") || content.data.news_name.includes("ม็อบ") ||
-                                                        content.data.news_name.includes("นายก") || content.data.news_name.includes("รัฐ")?
-                                                        <p className='card-subtitle'>ประเภทของปัญหา: การเมือง </p>
-                                                        :
-                                                        content.data.news_name.includes("เลือกตั้ง") || content.data.news_name.includes("ม็อบ") ||
-                                                        content.data.news_name.includes("นายก") || content.data.news_name.includes("รัฐ")?
-                                                        <p className='card-subtitle'>ประเภทของปัญหา: การเมือง </p>
-                                                          :
-                                                          content.data.news_name.includes("รถชน") || content.data.news_name.includes("ล้ม") ||
-                                                          content.data.news_name.includes("คว่ำ")?
-                                                          <p className='card-subtitle'>ประเภทของปัญหา: อุบัติเหตุ </p>
-                                                            :
-                                                            <p className='card-subtitle'>ประเภทของปัญหา: ข่าวสังคม </p>
-
-                                        }                
+                                        <p className='card-subtitle'>ประเภทของปัญหาหลังจากการทำนายด้วย AI: {content.data.topic}</p>                   
                                         <p className='time'>{content.data.news_date}</p>
                                         <hr className='mb-0 mt-0 hr-news'></hr>
                                         </div> 
                                                                          
-                                    </div>
-                                
-                                
+                                    </div>    
                             )
                     })}
                         </div>

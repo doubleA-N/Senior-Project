@@ -25,7 +25,7 @@ class AddData extends React.Component {
         info: null,
         placename: null,
         latLng:null,
-        
+        topic: null
         };
       }
 
@@ -48,6 +48,9 @@ class AddData extends React.Component {
     }
 
     addUser = e => {
+
+    e.preventDefault();
+            
     let date = new Date();
     let dd = date.getDate();
     let mm = date.getMonth()+1;
@@ -64,18 +67,29 @@ class AddData extends React.Component {
     date = `${yyyy}/${mm}/${dd} ${hh}:${min}:${sec}`
 
     if(this.state.info){
-      e.preventDefault();       
+      e.preventDefault();   
       db.settings({
         timestampsInSnapshots: true
-    });
-    // let timestamp = new firebase.firestore.Timestamp()
-    
+    }); 
 
-      let confirmData = ['ชื่อผู้ใช้: '+this.state.user.displayName
-      ,'\n ปัญหาที่เกิดขึ้น:'+this.state.description,
-      '\n เวลา:'+date,
-      '\n location:'+ this.state.placename]
-      
+    fetch("/predict", {
+      method:"POST",
+      cache: "no-cache",
+      headers:{
+          "content_type": 'application/json',
+      },
+      body: JSON.stringify(this.state.description)
+      }
+    )
+    .then(res => res.json()).then(data => {
+    // console.log(data)
+    this.setState({topic: JSON.stringify(data.topic)});
+
+    let confirmData = ['ชื่อผู้ใช้: '+this.state.user.displayName
+    ,'\n ปัญหาที่เกิดขึ้น:'+this.state.description,
+    '\n เวลา:'+date,
+    '\n location:'+ this.state.placename,
+    '\n หัวข้อ'+ this.state.topic]
       confirmAlert({
         title: 'คุณยืนยันที่จะรายงานปัญหาที่เกิดขึ้นหรือไม่',
         message: confirmData,
@@ -91,6 +105,7 @@ class AddData extends React.Component {
                 person: 'Normal User',
                 location: JSON.parse(JSON.stringify([this.state.info.lat,this.state.info.lng])),
                 news_date:date,
+                topic: this.state.topic
             }).then(() => {
               console.log("Document successfully add!");
               window.location = '/Profile'
@@ -114,6 +129,7 @@ class AddData extends React.Component {
         },
         onClickOutside: () => {}
       });
+    });
 
     }else if(!this.state.info){
       e.preventDefault(); 

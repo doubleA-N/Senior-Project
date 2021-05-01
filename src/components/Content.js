@@ -12,14 +12,14 @@ class Content extends React.Component {
   };
 
   async componentDidMount() {
-    var headers = {
-      Apikey: "370qxEEW5R7gUXPPw0Fo5BtMVU4iIkGo",
-    };
-    var options = {
-      url: "https://api.aiforthai.in.th/bully",
-      method: "POST",
-      headers: headers,
-    };
+    // var headers = {
+    //   Apikey: "370qxEEW5R7gUXPPw0Fo5BtMVU4iIkGo",
+    // };
+    // var options = {
+    //   url: "https://api.aiforthai.in.th/bully",
+    //   method: "POST",
+    //   headers: headers,
+    // };
 
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -95,42 +95,8 @@ class Content extends React.Component {
                         <p className="name">{content.name}</p>
                         <p className="mt-1 mb-1">{content.news_name}</p>
                         <p className="card-subtitle mt-1">{content.province}</p>
-                        {content.news_name.includes("ฝุ่น") || content.news_name.includes("ฝนตก") ||
-                        content.news_name.includes("ร้อน") || content.news_name.includes("หนาว") ||
-                        content.news_name.includes("อากาศ")?
-                                <p className='card-subtitle'>ประเภทของปัญหา: สภาพแวดล้อม</p>                               
-                                :                               
-                                content.news_name.includes("แทง") || content.news_name.includes("ยิง") || 
-                                content.news_name.includes("โจร") || content.news_name.includes("ฆ่า") ||
-                                content.news_name.includes("ปล้น") || content.news_name.includes("ชิง") ||
-                                content.news_name.includes("ข่มขืน") || content.news_name.includes("โกง")?
-                                  <p className='card-subtitle'>ประเภทของปัญหา:อาชญากรรม </p>
-                                  :
-                                    content.news_name.includes("ไฟไหม้") || content.news_name.includes("น้ำท่วม") 
-                                    || content.news_name.includes("น้ำป่าไหลหลาก")?
-                                    <p className='card-subtitle'>ประเภทของปัญหา: ภัยพิบัติ </p>
-                                    :
-                                      content.news_name.includes("โควิด") || content.news_name.includes("covid")?
-                                      <p className='card-subtitle'>ประเภทของปัญหา: COVID-19 </p>
-                                      :
-                                        content.news_name.includes("รถติด") || content.news_name.includes("จราจร")?
-                                        <p className='card-subtitle'>ประเภทของปัญหา: การจราจร </p>
-                                        :
-                                          content.news_name.includes("เลือกตั้ง") || content.news_name.includes("ม็อบ") ||
-                                          content.news_name.includes("นายก") || content.news_name.includes("รัฐ")?
-                                          <p className='card-subtitle'>ประเภทของปัญหา: การเมือง </p>
-                                          :
-                                          content.news_name.includes("เลือกตั้ง") || content.news_name.includes("ม็อบ") ||
-                                          content.news_name.includes("นายก") || content.news_name.includes("รัฐ")?
-                                          <p className='card-subtitle'>ประเภทของปัญหา: การเมือง </p>
-                                            :
-                                            content.news_name.includes("รถชน") || content.news_name.includes("ล้ม") ||
-                                            content.news_name.includes("คว่ำ")?
-                                            <p className='card-subtitle'>ประเภทของปัญหา: อุบัติเหตุ </p>
-                                              :
-                                              <p className='card-subtitle'>ประเภทของปัญหา: ข่าวสังคม </p>
-
-                        }                
+                        <p className='card-subtitle'>ประเภทของปัญหาหลังจากการทำนายด้วย AI: {content.topic}</p>
+                         
                         {content.news_url && (
                           <h6>
                             
