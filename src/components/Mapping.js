@@ -7,7 +7,7 @@ import NewsContent from './NewsContent';
 import '../CSS/App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import img from '../img/thairath.png'
-
+import verify from '../img/verify.png'
 
 
 function Mapping() {
@@ -21,6 +21,7 @@ function Mapping() {
      
     useEffect(() => {
         db.collection('news_thairath')
+        .where('status','==',1)
         .get()
         .then(snapshot => {
             const news_data =[]
@@ -113,6 +114,8 @@ function Mapping() {
                         <p class="card-subtitle ml-3 text-muted">{popup.person}</p>
                         <p class='card-text ml-3'>{popup.news_name}</p>
                         <p className='card-subtitle ml-3 mb-2 mr-3'>ประเภทของปัญหาหลังจากการทำนายด้วย AI: {popup.topic}</p>
+                        <p class="card-subtitle ml-3 text-muted">{popup.news_date}</p>
+                        <p class="card-subtitle ml-3 text-muted mb-2">Verified by: {popup.verify} <img src={verify} /></p>
                         <p class="card-subtitle ml-3  text-muted">{popup.province}</p>
                         {popup.news_url &&
                         <a class='card-link ml-3 mb-2' href = {popup.news_url}>รายละเอียดเพิ่มเติม...</a>

@@ -29,9 +29,7 @@ class Login extends React.Component {
         .then((result => {
             const user = result.user;
             this.setState({
-                user,
-                
-            });
+                user });
         }))
     }
 

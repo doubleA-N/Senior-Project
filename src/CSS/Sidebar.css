@@ -95,6 +95,7 @@ a.button3 {
     justify-content: center;
     align-items: center;
     transition: all 0.2s;
+    cursor: pointer;
 }
 
 a.button3:hover {
@@ -134,4 +135,12 @@ a.button-logout:hover {
 .list {
     margin-top: 120px;
     margin-bottom: 105px;
+}
+
+.for-admin {
+    margin-top: 100px;
+    margin-left: 70px;
+    padding: 10px 8px 6px 16px;
+    text-decoration: none;
+    display: block;
 }

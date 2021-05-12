@@ -16,7 +16,7 @@ import xlrd
 app = Flask(__name__)
 CORS(app)
 
-app = Flask(__name__, static_url_path='',static_folder='front-end') #Initialize the flask App
+app = Flask(__name__,) #Initialize the flask App
 
 data_tr = open('data_tr.pkl','rb')
 data_cleaned_tr = pickle.load(data_tr)
@@ -73,7 +73,7 @@ def predict_dn(problem_dn):
   x_tfidf = transformer_dn.transform(x)
   x_svd = svd_model_dn.transform(x_tfidf)
   pred = [model.predict_proba(x_svd.reshape(-1, 1).T).ravel()[1] for model in dnModel]
-  tag = pd.get_dummies(df_dn.news_cat).columns
+#   tag = pd.get_dummies(df_dn.news_cat).columns
 #   tag_predicted = list(zip(tag, pred))
   tag_predicted = tag_dn[np.argmax(pred)]
   return tag_predicted
@@ -83,7 +83,7 @@ def check_problem(check):
   topic = predict_dn(check)
   return topic
 
-@app.route('/predict',methods=['POST'])
+@app.route('/predict',methods=['GET','POST'])
 def predict():
     '''
     For rendering results on HTML GUI

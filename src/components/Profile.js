@@ -5,8 +5,13 @@ import '../CSS/Profile.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import worry from '../img/worried.png'
 import bin from "../img/delete.png";
+import check from '../img/check.png'
+import close from '../img/close.png'
+import verify from '../img/verify.png'
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+
+import Button from 'react-bootstrap/Button'
 
 class Profile extends React.Component {
 
@@ -14,11 +19,17 @@ class Profile extends React.Component {
         super();
         this.state = {
           user: null,
-         
+          fullName: "",
+          id:""         
         };
       }
      
       componentDidMount() {
+        const fullName = localStorage.getItem('fullName') 
+        const id = localStorage.getItem('id')
+        this.setState({fullName: fullName, id:id})
+        console.log('myData',fullName,id)
+        
         auth.onAuthStateChanged((user) => {
           if (user) {
             this.setState({user})
@@ -40,6 +51,12 @@ class Profile extends React.Component {
                           })
         }).catch(error => console.log(error))
     })
+      }
+
+      clear(){
+        localStorage.removeItem('fullName') 
+        localStorage.removeItem('id')
+        console.log('clear')
       }
 
      removeData(id){
@@ -87,12 +104,12 @@ class Profile extends React.Component {
           <div  className='App-line'></div>
           {this.state.user?
             <div className='mt-4'>
-                 <div className="alert alert-success" role="alert">
+                 {/* <div className="alert alert-success" role="alert">
                   <h4 className="alert-heading">ยินดีต้อนรับ!</h4>
                   <p>โปรไฟล์ของคุณที่จะปรากฏแก่สาธารณะจะมีเพียงแค่ชื่อและรูปภาพเท่านั้น</p>
                   <hr></hr>
                   <p className="mb-0">มั่นใจได้เลยว่าข้อมูลของคุณจะปลอดภัย!</p>
-                </div>
+                </div> */}
 
                 <div className='row'> 
                     <div className='col-4'>
@@ -102,8 +119,11 @@ class Profile extends React.Component {
                                 <div className="row">
                                     <div className="col-xs-4">
                                         <div className="profile-overview">
-                                            <h6>ชื่อ: {this.state.user.displayName}</h6>
+                                            <h6>ชื่อ: {this.state.fullName}</h6>
+                                            <h6>เลขบัตรประชาชน: {this.state.id}</h6>
+                                            <h6>ชื่อผู้ใช้ e-mail: {this.state.user.displayName}</h6>
                                             <h6>e-mail: {this.state.user.email}</h6>
+                                            {/* <a onClick={this.clear}>clear</a> */}
                                         </div>
                                     </div>
                                     
@@ -120,17 +140,36 @@ class Profile extends React.Component {
                          
                           return(
                                 <div>
-                                    
+                                        
                                         <div 
                                         key ={content.id}
                                         className="card-body pt-3 pb-0">
                                         <img className='news-img' src={content.data.photo}/>
                                         <p className='news'>{content.data.name}</p>
-                                        <p className='mt-1 mb-2'>{content.data.news_name}<img className='bin-button' title='ลบปัญหานี้' src={bin} 
+                                        {content.data.status == '0' ?
+                                          <Button size='sm' className='status' variant="warning" >
+                                          
+                                           กำลังตรวจสอบความถูกต้อง
+                                          </Button>
+                                        : content.data.status == '1' ?
+                                          <Button size='sm' className='status' variant="success">
+                                          <img src={check} /> ข้อมูลปัญหาถูกต้อง
+                                          </Button>
+                                          :
+                                            <Button size='sm' className='status' variant="danger">
+                                            <img src={close} /> ข้อมูลปัญหาไม่ถูกต้อง
+                                            </Button>
+                                        }
+                                       
+                                        <p className='mt-1 mb-2'>{content.data.news_name} <img className='bin-button' title='ลบปัญหานี้' src={bin} 
                                         onClick={() => this.removeData(content.id)}
                                         /></p>
                                         <p className='card-subtitle'>ประเภทของปัญหาหลังจากการทำนายด้วย AI: {content.data.topic}</p>                   
                                         <p className='time'>{content.data.news_date}</p>
+                                        {content.data.verify &&
+                                        <p className='time'> Verified by: {content.data.verify}<img src={verify} /></p>
+                                        }
+                                        
                                         <hr className='mb-0 mt-0 hr-news'></hr>
                                         </div> 
                                                                          

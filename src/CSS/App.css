@@ -31,6 +31,7 @@
     height: 400px;
     width: 44rem;
     margin-top: 20px;
+    z-index: 0;
 }
 
 .page {

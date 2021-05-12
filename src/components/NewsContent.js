@@ -20,6 +20,7 @@ class NewsContent extends React.Component{
             snapshot.forEach(doc => {
                 const data = doc.data()
                 news_thairath.push(data)
+                console.log(data)
             })
             this.setState({news_thairath:news_thairath})
         }).catch(error => console.log(error))
@@ -31,7 +32,7 @@ class NewsContent extends React.Component{
                 <div className='col-8'>
                       
                     <div className="card bg-card mb-3 card-size">
-                    <div className="card-header">ข่าวจากสำนักข่าว</div>
+                    <div className="card-header">ข่าวจากสำนักข่าว(demo)</div>
                     {this.state.news_thairath &&
                     this.state.news_thairath.map( content =>{
                         return(

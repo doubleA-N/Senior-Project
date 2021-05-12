@@ -8,14 +8,20 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { geolocated } from "react-geolocated";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import Alert from 'react-bootstrap/Alert'
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
+import { Col, Row, Form } from 'react-bootstrap'
+
+
 
 const icon = new Icon({
   iconUrl: "/marker.svg",
   iconSize: [25, 41]
 });
 
-
 class AddData extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -25,26 +31,46 @@ class AddData extends React.Component {
         info: null,
         placename: null,
         latLng:null,
-        topic: null
+        topic: null,
+        fullName: "",
+        id:"",
+        modalShow: true
         };
+        this.updateInput = this.updateInput.bind(this);
       }
 
-      componentDidMount() {
+    componentDidMount() {
         
         auth.onAuthStateChanged((user) => {
           if (user) {
-            this.setState({user})
+            this.setState({user});
           }
         })
-        
+        const fullName = localStorage.getItem('fullName') 
+        const id = localStorage.getItem('id')
+        this.setState({fullName: fullName, id:id})
+        console.log('myData',fullName,id)
+
       }
 
     updateInput = e => {
+      const target = e.target;
+      const value = target.type === 'checkbox' ? target.checked : target.value;
+      const name = target.name;
         this.setState({
-            [e.target.name]: e.target.value
+            [name]: value
            
         });
       
+    }
+    
+
+    saveData = e => {
+      e.preventDefault();
+      localStorage.setItem('fullName', this.state.fullName);
+      localStorage.setItem('id', this.state.id);
+      // window.location = '/AddData'
+      console.log(this.state.fullName,this.state.id)
     }
 
     addUser = e => {
@@ -64,6 +90,15 @@ class AddData extends React.Component {
     if(mm<10){
       mm=`0${mm}`
     }
+    if(hh<10){
+      hh=`0${hh}`
+    }
+    if(min<10){
+      min=`0${mm}`
+    }
+    if(sec<10){
+      sec=`0${mm}`
+    }
     date = `${yyyy}/${mm}/${dd} ${hh}:${min}:${sec}`
 
     if(this.state.info){
@@ -82,14 +117,16 @@ class AddData extends React.Component {
       }
     )
     .then(res => res.json()).then(data => {
-    // console.log(data)
+    console.log(data)
     this.setState({topic: JSON.stringify(data.topic)});
 
-    let confirmData = ['ชื่อผู้ใช้: '+this.state.user.displayName
+    let confirmData = ['ชื่อผู้ใช้: '+this.state.fullName
+    ,'\n เลขบัตรประชาชน:'+this.state.id
     ,'\n ปัญหาที่เกิดขึ้น:'+this.state.description,
     '\n เวลา:'+date,
     '\n location:'+ this.state.placename,
-    '\n หัวข้อ'+ this.state.topic]
+    '\n หัวข้อ:'+ JSON.parse(this.state.topic)]
+
       confirmAlert({
         title: 'คุณยืนยันที่จะรายงานปัญหาที่เกิดขึ้นหรือไม่',
         message: confirmData,
@@ -105,11 +142,14 @@ class AddData extends React.Component {
                 person: 'Normal User',
                 location: JSON.parse(JSON.stringify([this.state.info.lat,this.state.info.lng])),
                 news_date:date,
-                topic: this.state.topic
+                topic: JSON.parse(this.state.topic),
+                status: 0,
+                fullName: this.state.fullName,
+                id: this.state.id
             }).then(() => {
               console.log("Document successfully add!");
               window.location = '/Profile'
-              this.setState({
+              this.setState({ 
                 name: "",
                 description: "",
                 info: null               
@@ -136,6 +176,19 @@ class AddData extends React.Component {
       db.settings({
         timestampsInSnapshots: true
     });
+
+    fetch("/predict", {
+      method:"POST",
+      cache: "no-cache",
+      headers:{
+          "content_type": 'application/json',
+      },
+      body: JSON.stringify(this.state.description)
+      }
+    ) .then(res => res.json()).then( data => {
+      console.log(data)
+      this.setState({topic: JSON.stringify(data.topic)});
+
       confirmAlert({
         // title: 'คุณยืนยันที่จะรายงานปัญหาที่เกิดขึ้นหรือไม่',
         message: 'คุณยังไม่เลือกสถานที่ที่เกิดปัญหา',
@@ -156,6 +209,10 @@ class AddData extends React.Component {
                         person: 'Normal User',
                         location: JSON.parse(JSON.stringify([this.state.latLng.latitude,this.state.latLng.longitude])),
                         news_date:date,
+                        topic: JSON.parse(this.state.topic),
+                        status: 0,
+                        fullName: this.state.fullName,
+                        id: this.state.id
                     }).then(() => {
                       console.log("Document successfully add!");
                       window.location = '/Profile'
@@ -165,7 +222,6 @@ class AddData extends React.Component {
                         info: null               
                         });
                       });  
-                console.log(this.state.latLng.latitude, this.state.latLng.longitude)
                 }, () => {
                   alert('Unable to retrieve your location');
                 });
@@ -183,6 +239,7 @@ class AddData extends React.Component {
         },
         onClickOutside: () => {}
       });
+    });
 
     }
       };  
@@ -209,7 +266,8 @@ class AddData extends React.Component {
         );
         
       }
-     
+
+         
     render() {
       return (
         <div className='Adddata-main'>
@@ -217,32 +275,59 @@ class AddData extends React.Component {
           <h3 className='heading'>รายงานปัญหา</h3>
           <div  className='App-line'></div>
           {this.state.user?
+            this.state.fullName && this.state.id ?
             
-            <form onSubmit={this.addUser}>
-        
-            <div className='form-center' >      
-                 
-                  <label for='report'>รายงานปัญหาของคุณ </label>
-                  <textarea
-                    class ='form-control'
-                    id='report'
-                    type="text"
-                    name="description" 
-                    placeholder="report here"
-                    onChange={this.updateInput}
-                    value={this.state.description}
-                    required
-                  />
+              <form onSubmit={this.addUser}>
                 
-                <div className='map-content'>
-                <label className='text-content' for='map'>ปัญหาของคุณเกิดขึ้นที่ใด</label>
-               
-                <Map className='map' center={[13.76, 100.51]} zoom={5}>
+                  <div className='form-center' > 
+                    <label for='fullName'>ชื่อตามบัตรประชาชน </label>
+                    <input 
+                      class ='form-control'
+                      id='fullName'
+                      type="text"
+                      name="fullName" 
+                      placeholder="report here"
+                      onChange={this.updateInput}
+                      value={this.state.fullName}
+                      />
+
+                    <label for='idnum'>เลขบัตรประชาชน </label>
+                    <input 
+                      class ='form-control'
+                      id='idnum'
+                      type="text"
+                      name="id" 
+                      placeholder="report here"
+                      onChange={this.updateInput}
+                      value={this.state.id}
+                      />
+                     <Button className='save-button' variant="primary" 
+                    size="sm"
+                    onClick={this.saveData}
+                    >
+                      บันทึกไว้ภายหลัง
+                    </Button>
+                    <br /><br />
+                    <h4 className='heading'>รายงานปัญหาของคุณ</h4>
+                    <textarea
+                      class ='form-control'
+                      id='report'
+                      type="text"
+                      name="description" 
+                      placeholder="report here"
+                      onChange={this.updateInput}
+                      value={this.state.description}
+                      required
+                    />
+            
+                  <div className='map-content'>
+                    <label className='text-content' for='map'>ปัญหาของคุณเกิดขึ้นที่ใด</label>
+           
+                    <Map className='' center={[13.76, 100.51]} zoom={5}>
                         <TileLayer
                           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                        />
-                                                
+                        />                                                
                         <Search
                         position="topleft"
                         inputPlaceholder="ค้นหาสถานที่"
@@ -253,30 +338,123 @@ class AddData extends React.Component {
                         closeResultsOnClick={true}
                         onChange={(info) => {this.setState({placename:info.info,info:info.latLng})}}
                         >
-
                           {(info) => 
                           (                                
                                 <Marker 
                                 position={info?.latLng}
                                 icon = {icon}
                                 >
-                                  {console.log(info)}
+                                  {/* {console.log(info)} */}
                                   {this.customPopup(info)}
                                 </Marker>
                             
                             )}            
 
                         </Search>           
-            </Map>
-            <label className='text-warn'>*คุณสามารถใช้ตำแหน่งปัจจุบันได้ด้วยการคลิ้กที่ปุ่มแจ้งปัญหา โดยไม่จำเป็นต้องเลือกสถานที่บนแผนที่</label>
-                </div>
-                
-                <div className='button text-center'>
-                <button className='btn btn-danger btn-lg' type="submit" onClick={this.send}>แจ้งปัญหา</button>
-              </div>
-              </div>
+                    </Map>
+       
+                  </div>
+                    <Alert className='text-warn' variant='warning'>
+                    *คุณสามารถใช้ตำแหน่งปัจจุบันได้ด้วยการคลิ้กที่ปุ่มแจ้งปัญหาได้ทันที โดยไม่จำเป็นต้องเลือกสถานที่บนแผนที่
+                    </Alert>
+                    </div>
+                    <div className='button'>
+                      <button className='btn btn-danger btn-lg' type="submit" onClick={this.send}>แจ้งปัญหา</button>
+                    </div>
+                  
               </form>
-               :
+            :
+            <form onSubmit={this.addUser}>
+                
+                  <div className='form-center' > 
+                    <label for='fullName'>ชื่อตามบัตรประชาชน </label>
+                    <input 
+                      class ='form-control'
+                      id='fullName'
+                      type="text"
+                      name="fullName" 
+                      placeholder="กรอกชื่อตามบัตรประชาชน"
+                      onChange={this.updateInput}
+                      value={this.state.fullName}
+                      />
+
+                    <label for='idnum'>เลขบัตรประชาชน </label>
+                    <input 
+                      class ='form-control'
+                      id='idnum'
+                      type="text"
+                      name="id" 
+                      placeholder="กรอกเลขบัตรประจำตัวประชาชน"
+                      onChange={this.updateInput}
+                      value={this.state.id}
+                      />
+                    {/* <input 
+                      type='checkbox' 
+                      class="form-check-input ml-1" 
+                      id="exampleCheck1"/>
+                    <label className='ml-4' for="exampleCheck1">Remember me</label> */}
+                    <Button className='save-button' variant="primary" 
+                    size="sm"
+                    onClick={this.saveData}>
+                      บันทึกไว้ภายหลัง
+                    </Button>
+                    <br /><br />
+                    <h4 className='heading'>รายงานปัญหาของคุณ</h4>
+                    <textarea
+                      class ='form-control'
+                      id='report'
+                      type="text"
+                      name="description" 
+                      placeholder="report here"
+                      onChange={this.updateInput}
+                      value={this.state.description}
+                      required
+                    />
+            
+                  <div className='map-content'>
+                    <label className='text-content' for='map'>ปัญหาของคุณเกิดขึ้นที่ใด</label>
+           
+                    <Map className='' center={[13.76, 100.51]} zoom={5}>
+                        <TileLayer
+                          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                        />                                                
+                        <Search
+                        position="topleft"
+                        inputPlaceholder="ค้นหาสถานที่"
+                        zoom={13} // Default value is 10
+                        showMarker={true}
+                        showPopup={true}
+                        openSearchOnLoad={false} // By default there's a search icon which opens the input when clicked. Setting this to true opens the search by default.
+                        closeResultsOnClick={true}
+                        onChange={(info) => {this.setState({placename:info.info,info:info.latLng})}}
+                        >
+                          {(info) => 
+                          (                                
+                                <Marker 
+                                position={info?.latLng}
+                                icon = {icon}
+                                >
+                                  {/* {console.log(info)} */}
+                                  {this.customPopup(info)}
+                                </Marker>
+                            
+                            )}            
+
+                        </Search>           
+                    </Map>
+       
+                  </div>
+                    <Alert className='text-warn' variant='warning'>
+                    *คุณสามารถใช้ตำแหน่งปัจจุบันได้ด้วยการคลิ้กที่ปุ่มแจ้งปัญหาได้ทันที โดยไม่จำเป็นต้องเลือกสถานที่บนแผนที่
+                    </Alert>
+                    </div>
+                    <div className='button'>
+                      <button className='btn btn-danger btn-lg' type="submit" onClick={this.send}>แจ้งปัญหา</button>
+                    </div>
+                  
+              </form>         
+              :
                <div className='mt-4'>
                  <div class="alert alert-danger" role="alert">
                   <h4 class="alert-heading">คุณยังไม่ได้เข้าสู่ระบบ!</h4>
@@ -299,12 +477,7 @@ class AddData extends React.Component {
                     onChange={this.updateInput}
                     value={this.state.description}
                   />
-                
-                    <div className='map-content'>
-                    </div>
-                    <div className='button text-center'>
-                      <button className='btn btn-danger btn-lg' type="submit" onClick={this.send} disabled>กรุณาเข้าสู่ระบบเพื่อรายงานปัญหา</button>
-                    </div>
+
               </div>
               </form>
 

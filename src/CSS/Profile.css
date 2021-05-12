@@ -5,7 +5,7 @@
     margin-top: 0px;
     display: flex;
     width: 100vh;
-    height: 100%;
+    height: 100vh;
 }
 
 .img-profile {
@@ -23,6 +23,11 @@
     animation: shake 0.9s;
     /* When the animation is finished, start again */
     animation-iteration-count: infinite;
+}
+
+.status {
+    float: right;
+    pointer-events: none;
 }
 
 @keyframes shake {

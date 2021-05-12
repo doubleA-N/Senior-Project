@@ -5,7 +5,12 @@
     margin-top: 0px;
     display: flex;
     width: 100vh;
-    height: 100vh;
+    height: 130vh;
+}
+
+.save-button {
+    margin-top: 5px;
+    float: right;
 }
 
 .button {
@@ -30,19 +35,21 @@
 
 .map-content {
     color: #263669;
-    margin-top: 10px;
+    margin-top: 0px;
     margin-bottom: 0px;
+    z-index: 0;
 }
 
 .text-content {
     justify-content: center;
     align-items: center;
     margin-top: 20px;
+    margin-bottom: 0px;
 }
 
 .text-warn {
-    color: #e4432f;
     font-size: small;
+    margin-top: 10px;
 }
 
 .center {

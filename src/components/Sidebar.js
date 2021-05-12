@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Redirect} from 'react-router-dom';
+import { BrowserRouter as Router} from 'react-router-dom';
 import '../CSS/App.css';
 import '../CSS/Sidebar.css';
 import img from '../img/profile-user.png';
@@ -10,8 +10,6 @@ import list from '../img/listing-option.png';
 import analyze from '../img/analytics.png';
 import user from '../img/user-profile (1).png';
 import { auth, provider } from '../data/firebase';
-
-// const history = useHistory();
 
 class sidebar extends React.Component {
     constructor(props) {
@@ -59,7 +57,8 @@ class sidebar extends React.Component {
         <Router>
             <div className="sidenav">
                     
-                    {this.state.user ?
+                    {this.state.user ?        
+                        
                         <div>
                         <img className ='img-sidebar' src={this.state.user.photoURL} />
                         <p className='profile-name'>{this.state.user.displayName}</p>
@@ -67,12 +66,13 @@ class sidebar extends React.Component {
                         <a className ='sidebar-link' href="/"><img className ='logo' src={folder}/>หน้าแรก</a>
                         <a className='sidebar-link' href='/AddData'><img className ='logo' src={report}/>แจ้งปัญหา</a>
                         <a className ='sidebar-link' href="/Content"><img className ='logo' src={list}/>ดูข้อมูลของปัญหา</a>
-                        <a className ='sidebar-link' href="/Visualize"><img className ='logo' src={analyze}/>วิเคราะห์ปัญหา</a>
+                        {/* <a className ='sidebar-link' href="/Visualize"><img className ='logo' src={analyze}/>วิเคราะห์ปัญหา</a> */}
                         <a className ='sidebar-link' href="/Profile"><img className ='logo' src={user}/>โปรไฟล์ของคุณ</a>
 
                         </div>
                         <a className='button-logout' href="/" onClick={this.logout}>ออกจากระบบ</a>
                         </div>
+                        
                         :
                         <div>
                         <img className ='img-sidebar' src={img}/>
@@ -82,21 +82,15 @@ class sidebar extends React.Component {
                         <a className ='sidebar-link' href="/"><img className ='logo' src={folder}/>หน้าแรก</a>
                         <a className='sidebar-link' href='/AddData'><img className ='logo' src={report}/>แจ้งปัญหา</a>
                         <a className ='sidebar-link' href="/Content"><img className ='logo' src={list}/>ดูข้อมูลของปัญหา</a>
-                        <a className ='sidebar-link' href="/Visualize"><img className ='logo' src={analyze}/>วิเคราะห์ปัญหา</a>
+                        {/* <a className ='sidebar-link' href="/Visualize"><img className ='logo' src={analyze}/>วิเคราะห์ปัญหา</a> */}
                         <a className ='sidebar-link' href="/Profile"><img className ='logo' src={user}/>โปรไฟล์ของคุณ</a>
+                        <a className ='for-admin' href="/AdminLogin">สำหรับเจ้าหน้าที่</a>
                         </div>
                         </div>
                     }
-                    
-                  
                   
             </div>
         </Router>
-                 
-            
-            
-                
-            
         );
     }
 }

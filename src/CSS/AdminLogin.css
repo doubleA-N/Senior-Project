@@ -1,0 +1,13 @@
+.login-main {
+    font-family: 'Prompt', sans-serif;
+    font-weight: 600;
+    background-color: #f1f1f1;
+    width: 100vh;
+    height: 100vh;
+    margin-top: 250px;
+    margin-left: 350px;
+}
+
+.button {
+    margin-left: 350px;
+}
