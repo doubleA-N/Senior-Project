@@ -9,26 +9,36 @@ from pythainlp.corpus import thai_stopwords
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.decomposition import TruncatedSVD
 import scipy.sparse as sp
-from itertools import chain 
+from itertools import chain
 import pandas as pd
 import xlrd
+import re
+from bs4 import BeautifulSoup
+import requests
+
 
 app = Flask(__name__)
 CORS(app)
 
-app = Flask(__name__,) #Initialize the flask App
+app = Flask(__name__, static_url_path='',static_folder='') #Initialize the flask App
 
-data_tr = open('data_tr.pkl','rb')
+data_tr = open('model/data_tr.pkl','rb')
 data_cleaned_tr = pickle.load(data_tr)
 
-data_dn = open('data_dn.pkl','rb')
+data_dn = open('model/data_dn.pkl','rb')
 data_cleaned_dn = pickle.load(data_dn)
 
-dn_model = open('model_2model_dn.pkl','rb')
+data_one = open('one_old/data_one.pkl','rb')
+data_cleaned_one = pickle.load(data_one)
+
+tr_model = open('model/model_tr.pkl','rb')
+trModel = pickle.load(tr_model)
+
+dn_model = open('model/model_dn.pkl','rb')
 dnModel = pickle.load(dn_model)
 
-tr_model = open('model_2model_tr.pkl','rb')
-trModel = pickle.load(tr_model)
+one_model = open('one_old/model_one.pkl','rb')
+oneModel = pickle.load(one_model)
 
 def text_to_bow(tokenized_text, vocabulary_):
     """ฟังก์ชันเพื่อแปลงลิสต์ของ tokenized text เป็น sparse matrix"""
@@ -55,6 +65,7 @@ def text_to_bow(tokenized_text, vocabulary_):
     return X
 
 
+## Daily News
 vocabulary_dn = {v: k for k, v in enumerate(set(chain.from_iterable(data_cleaned_dn)))}
 transformer_dn = TfidfTransformer()
 svd_model_dn = TruncatedSVD(n_components=100,
@@ -73,23 +84,124 @@ def predict_dn(problem_dn):
   x_tfidf = transformer_dn.transform(x)
   x_svd = svd_model_dn.transform(x_tfidf)
   pred = [model.predict_proba(x_svd.reshape(-1, 1).T).ravel()[1] for model in dnModel]
-#   tag = pd.get_dummies(df_dn.news_cat).columns
-#   tag_predicted = list(zip(tag, pred))
-  tag_predicted = tag_dn[np.argmax(pred)]
+  # tag_predicted = tag_tr[np.argmax(pred)]
+  tag = pd.get_dummies(df_dn.news_cat).columns
+  tag_predicted = list(zip(tag, pred))
   return tag_predicted
 
-def check_problem(check):
-  
-  topic = predict_dn(check)
-  return topic
 
-@app.route('/predict',methods=['GET','POST'])
+## Thairath
+vocabulary_tr = {v: k for k, v in enumerate(set(chain.from_iterable(data_cleaned_tr)))}
+transformer_tr = TfidfTransformer()
+svd_model_tr = TruncatedSVD(n_components=100,
+                         algorithm='arpack', n_iter=100)
+
+X = text_to_bow(data_cleaned_tr, vocabulary_tr)
+X_tfidf = transformer_tr.fit_transform(X)
+X_svd = svd_model_tr.fit_transform(X_tfidf)
+
+df_tr = pd.read_excel('data_train_labeled.xlsx')
+tag_tr = pd.get_dummies(df_tr.news_cat).columns
+
+def predict_tr(problem_tr): 
+  tokenized_text = word_tokenize(problem_tr)
+  x = text_to_bow([tokenized_text], vocabulary_tr)
+  x_tfidf = transformer_tr.transform(x)
+  x_svd = svd_model_tr.transform(x_tfidf)
+  pred = [model.predict_proba(x_svd.reshape(-1, 1).T).ravel()[1] for model in trModel]
+  # tag_predicted = tag_tr[np.argmax(pred)]
+  tag = pd.get_dummies(df_tr.news_cat).columns
+  tag_predicted = list(zip(tag, pred))
+  return tag_predicted
+
+## One31
+vocabulary_one = {v: k for k, v in enumerate(set(chain.from_iterable(data_cleaned_one)))}
+transformer_one = TfidfTransformer()
+svd_model_one = TruncatedSVD(n_components=100,
+                         algorithm='arpack', n_iter=100)
+
+X = text_to_bow(data_cleaned_tr, vocabulary_one)
+X_tfidf = transformer_one.fit_transform(X)
+X_svd = svd_model_one.fit_transform(X_tfidf)
+
+df_one = pd.read_excel('data_one_labeled.xlsx')
+tag_one = pd.get_dummies(df_one.news_cats).columns
+
+def predict_one(problem_one): 
+  tokenized_text = word_tokenize(problem_one)
+  x = text_to_bow([tokenized_text], vocabulary_one)
+  x_tfidf = transformer_one.transform(x)
+  x_svd = svd_model_one.transform(x_tfidf)
+  pred = [model.predict_proba(x_svd.reshape(-1, 1).T).ravel()[1] for model in oneModel]
+  # tag_predicted = tag_tr[np.argmax(pred)]
+  tag = pd.get_dummies(df_one.news_cats).columns
+  tag_predicted = list(zip(tag, pred))
+  return tag_predicted
+
+## Prediction
+class TopicPredictor():
+  settings = {}
+  tag = []
+  def __init__(self, settings, tag):
+    self.settings = settings
+    self.tag = tag
+
+  def predict(self, input, method="vote", withTag=True):
+    if method=="vote":
+      methods = [i for i in settings]
+      results = [self._predict(input, method, withTag=False) for method in methods]
+      voters = np.zeros(len(self.tag))
+      for result in results:
+        vote = np.argmax(result)
+        voters[vote] += 1
+      winner = self.tag[np.argmax(voters)]
+      return winner
+
+    if method=="mul":
+      methods = [i for i in settings]
+      results = [self._predict(input, method, withTag=False) for method in methods]
+      mul_result = np.ones(len(self.tag))
+      for result in results:
+        mul_result *= np.array(result)
+      winner = self.tag[np.argmax(mul_result)]
+      return  winner
+
+    elif method=="all":
+      methods = [i for i in settings]
+      results = [self._predict(input, method, withTag) for method in methods]
+      return methods, results
+
+    else:
+      return self._predict(input, method, withTag)
+    
+  def _predict(self, input, method, withTag=True):
+    tokenized_text = word_tokenize(input)
+    x = text_to_bow([tokenized_text], self.settings[method]['vocabulary'])
+    x_tfidf = self.settings[method]['transformer'].transform(x)
+    x_svd = self.settings[method]['svd'].transform(x_tfidf)
+    pred = [model.predict_proba(x_svd.reshape(-1, 1).T).ravel()[1] for model in self.settings[method]['model']]
+    ret = pred
+    if withTag:
+      ret = list(zip(self.tag, pred))
+    return ret
+
+tag = list(pd.get_dummies(df_tr.news_cat).columns)
+settings = {
+  'dn': {'vocabulary': vocabulary_dn, 'transformer': transformer_dn, 'model': dnModel, 'svd': svd_model_dn},
+  'tr': {'vocabulary': vocabulary_tr, 'transformer': transformer_tr, 'model': trModel, 'svd': svd_model_tr},
+  'one': {'vocabulary': vocabulary_one, 'transformer': transformer_one, 'model': oneModel, 'svd': svd_model_one}
+}
+
+tp = TopicPredictor(settings, tag)
+
+@app.route('/predict', methods=['GET','POST'])
+
 def predict():
     '''
     For rendering results on HTML GUI
     '''   
     text =  request.json
-    output = check_problem(text)
+    output = tp.predict( text, method='vote')
     return {'topic': output}
 
 if __name__ == "__main__":
