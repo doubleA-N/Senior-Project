@@ -60,12 +60,12 @@ class AdminLogin extends React.Component {
                 }).catch(error => console.log(error))
             }
             else{
-                alert('wrong password')
+                alert('Wrong Password')
             }
    
         }
         else{
-           alert('wrong username')
+           alert('Wrong Username')
         }   
     }
 

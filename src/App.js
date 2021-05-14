@@ -12,6 +12,9 @@ import Profile from './components/Profile';
 import CheckFakeNews from './components/CheckFakeNews';
 import AdminLogin from './components/AdminLogin'
 import AdminSidebar from './components/AdminSidebar';
+import Fakenews from './components/Fakenews';
+import TrueNews from './components/TrueNews';
+
 
 const LoginContainer = () => (
   <div >
@@ -24,6 +27,8 @@ const AdminCheck = () => (
     <AdminSidebar />
     <div className='content'>
     <Route path='/CheckFakeNews' exact component={CheckFakeNews} />
+    <Route path='/Fakenews' exact component={Fakenews}/>
+    <Route path='/TrueNews' exact component={TrueNews} />
     </div>
   </div>
 )
@@ -71,6 +76,8 @@ class App extends React.Component {
           <Switch>
             <Route path='/AdminLogin' exact component={LoginContainer} />
             <Route path='/CheckFakeNews' exact component={AdminCheck} />
+            <Route path='/Fakenews' exact component={AdminCheck} />
+            <Route path='/TrueNews' exact component={AdminCheck} />
             <Route component={DefaultContainer}/>
             {/* <Route path='/CheckFakeNews' exact component={CheckFakeNews} />
             <Route path='/AddData' exact component={AddData} />

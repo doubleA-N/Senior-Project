@@ -7,9 +7,10 @@ import google from '../img/google.png';
 import folder from '../img/folder.png';
 import report from '../img/write-letter.png';
 import list from '../img/listing-option.png';
-import analyze from '../img/analytics.png';
+// import analyze from '../img/analytics.png';
 import user from '../img/user-profile (1).png';
 import { auth, provider } from '../data/firebase';
+
 
 class sidebar extends React.Component {
     constructor(props) {
@@ -20,10 +21,6 @@ class sidebar extends React.Component {
           this.login = this.login.bind(this);
           this.logout = this.logout.bind(this);
       } 
-      handleChange(e){
-  
-      }
-
   
       logout(){
           auth.signOut()
@@ -87,6 +84,8 @@ class sidebar extends React.Component {
                         <a className ='for-admin' href="/AdminLogin">สำหรับเจ้าหน้าที่</a>
                         </div>
                         </div>
+                        
+                        
                     }
                   
             </div>

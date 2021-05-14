@@ -4,8 +4,22 @@
     background-color: #ffffff;
     overflow-x: hidden;
     padding-top: 150px;
-    z-index: auto;
+    z-index: 0;
     position: fixed;
+}
+
+@media screen and (max-width: 700px) {
+    .sidenav {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .sidebar a {
+        float: left;
+    }
+    div.content {
+        margin-left: 0;
+    }
 }
 
 .img-sidebar {
@@ -68,15 +82,6 @@
     transition: transform .2s;
     /* Animation */
     transform: scale(1.05);
-}
-
-@media screen and (max-height: 450px) {
-    .sidenav {
-        padding-top: 15px;
-    }
-    .sidenav a {
-        font-size: 18px;
-    }
 }
 
 a.button3 {

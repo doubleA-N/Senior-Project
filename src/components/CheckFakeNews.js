@@ -4,40 +4,18 @@ import { Icon } from "leaflet";
 import Button from 'react-bootstrap/Button'
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import "../CSS/CheckFakeNews.css";
-import { db, auth } from "../data/firebase";
+import { db } from "../data/firebase";
 import img from "../img/thairath.png";
-import Modal from 'react-bootstrap/Modal'
-import { Col, Row, Form } from 'react-bootstrap'
-import AdminLogin from "./AdminLogin";
+// import Modal from 'react-bootstrap/Modal'
+import 'bootstrap/dist/css/bootstrap.css';
+// import { Col, Row, Form } from 'react-bootstrap'
+// import AdminLogin from "./AdminLogin";
 
 const map = new Icon({
     iconUrl: "/marker.svg",
     iconSize: [25, 41]
   });
   
-    
-// function MyModal() {
-//     return (
-//         <Modal
-//         show= {true}
-//         size="lg"
-//         aria-labelledby="contained-modal-title-vcenter"
-//         centered
-//         >
-//         <Modal.Header>
-//         <Modal.Title id="contained-modal-title-vcenter">
-//         คุณไม่มีสิทธิ์เข้าสู่หน้านี้
-//         </Modal.Title>
-//         </Modal.Header>
-//         <Modal.Body>
-//         <h5>กรุณาเข้าสู๋ระบบด้วยบัญชีที่ได้รับอนุญาติ หรือกลับไปหน้าแรก</h5>
-//         </Modal.Body>
-//         <Modal.Footer>
-//             <button className='btn btn-primary btn-lg' type="submit" onClick='/AddData'>กลับไปหน้าแรก</button>
-//         </Modal.Footer>
-//         </Modal>    
-//     );
-// }
 
 class CheckFakeNews extends React.Component {
 
@@ -48,8 +26,9 @@ class CheckFakeNews extends React.Component {
             user:null,
             password:null,
             news_thairath: null,
-            
+            showModal:true,
         };
+        this.WrongChecked = this.WrongChecked.bind(this)
       }
  
     
@@ -133,7 +112,7 @@ class CheckFakeNews extends React.Component {
   }
 
   WrongChecked(id){
-    confirmAlert({
+      confirmAlert({
         // title: 'คุณยืนยันที่จะลบปัญหาที่เกิดขึ้นหรือไม่',
         message: 'ปัญหานี้ไม่ถูกต้องใช่หรือไม่?',
         buttons: [
@@ -170,9 +149,7 @@ class CheckFakeNews extends React.Component {
     return (
     
       <div>
-        {/* {this.state.user == null || this.state.password == null ?
-        <AdminLogin />
-        : */}
+        
         <div className="App-link">
           <h3 className="heading">ตรวจสอบปัญหา</h3>
           <div className="App-line"></div>
@@ -192,6 +169,7 @@ class CheckFakeNews extends React.Component {
                         )}
                         <p className="name">{content.data.fullName}</p>
                         <Button className='status-button' variant="outline-danger" onClick={() => this.WrongChecked(content.id)}>ข้อมูลไม่ถูกต้อง</Button>
+                        {/* <Button className='status-button' variant="outline-danger" onClick={() => this.WrongChecked(content.id)}>ข้อมูลไม่ถูกต้อง</Button> */}
                         <Button className='status-button' variant="outline-success" onClick={() => this.UpdateChecked(content.id)}>ข้อมูลถูกต้อง</Button>
                         <p className="time-fake">เลขบัตรประชาชน:  {content.data.id}</p>
                         <p className="mt-1 mb-1">{content.data.news_name}</p>
@@ -228,7 +206,7 @@ class CheckFakeNews extends React.Component {
             </div>
             
         </div>
-        {/* } */}
+        
         
       </div>
     );

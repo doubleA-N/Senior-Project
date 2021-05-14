@@ -12,6 +12,7 @@
         "antd": "^4.15.4",
         "axios": "^0.21.1",
         "bootstrap": "^4.5.2",
+        "cdbreact": "^1.1.0",
         "chart.js": "^2.9.4",
         "firebase": "^7.24.0",
         "firesql": "^2.0.2",
