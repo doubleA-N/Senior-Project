@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask import request
 from flask_cors import CORS
 import pickle
@@ -16,11 +16,8 @@ import re
 from bs4 import BeautifulSoup
 import requests
 
-
-app = Flask(__name__)
+app = Flask(__name__) #Initialize the flask App
 CORS(app)
-
-app = Flask(__name__, static_url_path='',static_folder='') #Initialize the flask App
 
 data_tr = open('model/data_tr.pkl','rb')
 data_cleaned_tr = pickle.load(data_tr)
@@ -204,5 +201,13 @@ def predict():
     output = tp.predict( text, method='vote')
     return {'topic': output}
 
-if __name__ == "__main__":
-    app.run(debug=True)
+@app.route('/')
+def hello():
+    return "hello newbie"
+
+@app.errorhandler(404)
+def not_found(e):
+    return app.send_static_file('index.html')
+
+if __name__ == '__main__':
+    app.run()

@@ -9,9 +9,9 @@ import { geolocated } from "react-geolocated";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import Alert from 'react-bootstrap/Alert'
-import Modal from 'react-bootstrap/Modal'
+// import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
-import { Col, Row, Form } from 'react-bootstrap'
+// import { Col, Row, Form } from 'react-bootstrap'
 
 
 
@@ -163,11 +163,7 @@ class AddData extends React.Component {
           }
         ],
         closeOnEscape: true,
-        closeOnClickOutside: true,
-        willUnmount: () => {},
-        afterClose: () => {
-        },
-        onClickOutside: () => {}
+        closeOnClickOutside: true
       });
     });
 
