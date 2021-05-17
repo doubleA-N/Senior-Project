@@ -113,10 +113,7 @@ class AddData extends React.Component {
       body: JSON.stringify(this.state.description)
       }
     )
-    .then(res => {
-      console.log('response',res)
-      res.json()
-    })
+    .then(res => res.json())
     .then(data => {
     console.log(data)
     this.setState({topic: data.output});
@@ -183,10 +180,7 @@ class AddData extends React.Component {
       },
       body: JSON.stringify(this.state.description)
       }
-    ) .then(res => {
-      res.json()
-      console.log('response',res)
-      })
+    ) .then(res => res.json())
       .then( data => {
       console.log(data)
       this.setState({topic: JSON.stringify(data.output)});
