@@ -108,6 +108,7 @@ class AddData extends React.Component {
       cache: "no-cache",
       headers:{
         "Content-Type": "application/json",
+        'Accept': 'application/json'
       },
       body: JSON.stringify(this.state.description)
       }
@@ -174,7 +175,7 @@ class AddData extends React.Component {
       cache: "no-cache",
       headers:{
         "Content-Type": "application/json",
-          
+        'Accept': 'application/json'
       },
       body: JSON.stringify(this.state.description)
       }
@@ -262,7 +263,7 @@ class AddData extends React.Component {
       return (
         <div className='Adddata-main'>
           <div className='App-link'>
-          <h3 className='heading'>รายงานปัญหา</h3>
+          <h3 className='heading'>รายงานปัญหาจ้า</h3>
           <div  className='App-line'></div>
           {this.state.user?
             this.state.fullName && this.state.id ?
