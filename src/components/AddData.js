@@ -104,12 +104,14 @@ class AddData extends React.Component {
     }); 
    
     fetch("https://flask-topic-prediction.herokuapp.com//predict", {
-      mode: 'cors',
+      mode: 'no-cors',
       method:"POST",
       cache: "no-cache",
       headers:{
         "Content-Type": "application/json",
-        Accept: "application/json"
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST"
       },
       body: JSON.stringify(this.state.description)
       }
@@ -173,12 +175,14 @@ class AddData extends React.Component {
     });
 
     fetch("https://flask-topic-prediction.herokuapp.com//predict", {
-      mode: 'cors',
+      mode: 'no-cors',
       method:"POST",
       cache: "no-cache",
       headers:{
         "Content-Type": "application/json",
-        Accept: "application/json"
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST"
       },
       body: JSON.stringify(this.state.description)
       }

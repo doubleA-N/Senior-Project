@@ -16,10 +16,8 @@ import re
 from bs4 import BeautifulSoup
 import requests
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/',static_folder='./build') #Initialize the flask App
 CORS(app)
-
-app = Flask(__name__, static_url_path='',static_folder='') #Initialize the flask App
 
 data_tr = open('model/data_tr.pkl','rb')
 data_cleaned_tr = pickle.load(data_tr)
@@ -193,7 +191,7 @@ settings = {
 
 tp = TopicPredictor(settings, tag)
 
-@app.route('/predict', methods=['GET','POST'])
+@app.route('/api/predict', methods=['GET','POST'])
 
 def predict():
     '''
