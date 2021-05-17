@@ -103,7 +103,7 @@ class AddData extends React.Component {
         timestampsInSnapshots: true
     }); 
    
-    fetch("https://flask-topic-prediction.herokuapp.com/predict", {
+    fetch("/predict", {
       method:"POST",
       cache: "no-cache",
       headers:{
@@ -174,7 +174,7 @@ class AddData extends React.Component {
         timestampsInSnapshots: true
     });
 
-    fetch("https://flask-topic-prediction.herokuapp.com/predict", {
+    fetch("/predict", {
       method:"POST",
       cache: "no-cache",
       headers:{

@@ -17,7 +17,7 @@ from bs4 import BeautifulSoup
 import requests
 
 app = Flask(__name__)
-# CORS(app)
+CORS(app)
 
 app = Flask(__name__, static_url_path='',static_folder='') #Initialize the flask App
 
