@@ -108,12 +108,12 @@ class AddData extends React.Component {
       cache: "no-cache",
       headers:{
         "Content-Type": "application/json",
-        'Accept': 'application/json'
+        "Accept": "application/json"
       },
       body: JSON.stringify(this.state.description)
       }
     )
-    .then(res => res.text()).then(data => {
+    .then(res => res.json()).then(data => {
     console.log(data)
     this.setState({topic: data.output});
     
@@ -175,11 +175,11 @@ class AddData extends React.Component {
       cache: "no-cache",
       headers:{
         "Content-Type": "application/json",
-        'Accept': 'application/json'
+        "Accept": "application/json"
       },
       body: JSON.stringify(this.state.description)
       }
-    ) .then(res => res.text()).then( data => {
+    ) .then(res => res.json()).then( data => {
       console.log(data)
       this.setState({topic: JSON.stringify(data.output)});
       
