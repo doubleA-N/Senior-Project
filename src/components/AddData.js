@@ -113,7 +113,7 @@ class AddData extends React.Component {
       body: JSON.stringify(this.state.description)
       }
     )
-    .then(res => res.json()).then(data => {
+    .then(res => res.text()).then(data => {
     console.log(data)
     this.setState({topic: data.output});
     
@@ -179,7 +179,7 @@ class AddData extends React.Component {
       },
       body: JSON.stringify(this.state.description)
       }
-    ) .then(res => res.json()).then( data => {
+    ) .then(res => res.text()).then( data => {
       console.log(data)
       this.setState({topic: JSON.stringify(data.output)});
       
@@ -263,7 +263,7 @@ class AddData extends React.Component {
       return (
         <div className='Adddata-main'>
           <div className='App-link'>
-          <h3 className='heading'>รายงานปัญหาจ้า</h3>
+          <h3 className='heading'>รายงานปัญหา</h3>
           <div  className='App-line'></div>
           {this.state.user?
             this.state.fullName && this.state.id ?
