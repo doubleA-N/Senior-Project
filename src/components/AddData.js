@@ -103,7 +103,7 @@ class AddData extends React.Component {
         timestampsInSnapshots: true
     }); 
    
-    fetch("https://flask-topic-prediction.herokuapp.com//predict", {
+    fetch("/predict", {
       method:"POST",
       cache: "no-cache",
       headers:{
@@ -174,7 +174,7 @@ class AddData extends React.Component {
         timestampsInSnapshots: true
     });
 
-    fetch("https://flask-topic-prediction.herokuapp.com//predict", {
+    fetch("/predict", {
       method:"POST",
       cache: "no-cache",
       headers:{
@@ -271,7 +271,7 @@ class AddData extends React.Component {
       return (
         <div className='Adddata-main'>
           <div className='App-link'>
-          <h3 className='heading'>รายงานปัญหา test</h3>
+          <h3 className='heading'>รายงานปัญหา</h3>
           <div  className='App-line'></div>
           {this.state.user?
             this.state.fullName && this.state.id ?
