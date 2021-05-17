@@ -69,5 +69,6 @@
             "last 1 safari version"
         ]
     },
+
     "proxy": "https://flask-topic-prediction.herokuapp.com/"
 }

@@ -32,9 +32,9 @@ class NewsContent extends React.Component{
                 <div className='col-8'>
                       
                     <div className="card bg-card mb-3 card-size">
-                    <div className="card-header">ข่าวจากสำนักข่าว(demo)</div>
+                    <div className="card-header">ข่าวจากสำนักข่าว(demo data)</div>
                     {this.state.news_thairath &&
-                    this.state.news_thairath.map( content =>{
+                    this.state.news_thairath.map( content => {
                         return(
                                 
                                 <div className="card-body pt-3 pb-0">

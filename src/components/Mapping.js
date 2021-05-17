@@ -105,7 +105,10 @@ function Mapping() {
                     <div className="card card-content-size bg-light">
                     <div className="card-header">รายละเอียดของปัญหา</div>
                         {popup.name == 'Thairath' ?
+                        <>
+                        <p>demo data</p>
                         <img className='ml-2 mt-2 news-img' src={img}/>
+                        </>
                         :
                         <img className='ml-2 mt-2 news-img' src={popup.photo}/>
                         }

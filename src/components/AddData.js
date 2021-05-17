@@ -9,11 +9,7 @@ import { geolocated } from "react-geolocated";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import Alert from 'react-bootstrap/Alert'
-// import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
-// import { Col, Row, Form } from 'react-bootstrap'
-
-
 
 const icon = new Icon({
   iconUrl: "/marker.svg",
@@ -34,11 +30,11 @@ class AddData extends React.Component {
         topic: null,
         fullName: "",
         id:"",
-        modalShow: true
+        modalShow: true,
         };
         this.updateInput = this.updateInput.bind(this);
       }
-
+    
     componentDidMount() {
         
         auth.onAuthStateChanged((user) => {
@@ -94,10 +90,10 @@ class AddData extends React.Component {
       hh=`0${hh}`
     }
     if(min<10){
-      min=`0${mm}`
+      min=`${mm}`
     }
     if(sec<10){
-      sec=`0${mm}`
+      sec=`${mm}`
     }
     date = `${yyyy}/${mm}/${dd} ${hh}:${min}:${sec}`
 
@@ -106,26 +102,26 @@ class AddData extends React.Component {
       db.settings({
         timestampsInSnapshots: true
     }); 
-
+   
     fetch("/predict", {
       method:"POST",
       cache: "no-cache",
       headers:{
-          "content_type": 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(this.state.description)
       }
     )
     .then(res => res.json()).then(data => {
     console.log(data)
-    this.setState({topic: JSON.stringify(data.topic)});
-
+    this.setState({topic: data.output});
+    
     let confirmData = ['ชื่อผู้ใช้: '+this.state.fullName
     ,'\n เลขบัตรประชาชน:'+this.state.id
     ,'\n ปัญหาที่เกิดขึ้น:'+this.state.description,
     '\n เวลา:'+date,
     '\n location:'+ this.state.placename,
-    '\n หัวข้อ:'+ JSON.parse(this.state.topic)]
+    '\n หัวข้อ:'+ this.state.topic]
 
       confirmAlert({
         title: 'คุณยืนยันที่จะรายงานปัญหาที่เกิดขึ้นหรือไม่',
@@ -142,7 +138,7 @@ class AddData extends React.Component {
                 person: 'Normal User',
                 location: JSON.parse(JSON.stringify([this.state.info.lat,this.state.info.lng])),
                 news_date:date,
-                topic: JSON.parse(this.state.topic),
+                topic: this.state.topic,
                 status: 0,
                 fullName: this.state.fullName,
                 id: this.state.id
@@ -177,14 +173,15 @@ class AddData extends React.Component {
       method:"POST",
       cache: "no-cache",
       headers:{
-          "content_type": 'application/json',
+        "Content-Type": "application/json",
+          
       },
       body: JSON.stringify(this.state.description)
       }
     ) .then(res => res.json()).then( data => {
       console.log(data)
-      this.setState({topic: JSON.stringify(data.topic)});
-
+      this.setState({topic: JSON.stringify(data.output)});
+      
       confirmAlert({
         // title: 'คุณยืนยันที่จะรายงานปัญหาที่เกิดขึ้นหรือไม่',
         message: 'คุณยังไม่เลือกสถานที่ที่เกิดปัญหา',
@@ -205,7 +202,7 @@ class AddData extends React.Component {
                         person: 'Normal User',
                         location: JSON.parse(JSON.stringify([this.state.latLng.latitude,this.state.latLng.longitude])),
                         news_date:date,
-                        topic: JSON.parse(this.state.topic),
+                        topic: this.state.topic,
                         status: 0,
                         fullName: this.state.fullName,
                         id: this.state.id
@@ -230,10 +227,7 @@ class AddData extends React.Component {
         ],
         closeOnEscape: true,
         closeOnClickOutside: true,
-        willUnmount: () => {},
-        afterClose: () => {
-        },
-        onClickOutside: () => {}
+       
       });
     });
 
@@ -340,7 +334,7 @@ class AddData extends React.Component {
                                 position={info?.latLng}
                                 icon = {icon}
                                 >
-                                  {/* {console.log(info)} */}
+                                  
                                   {this.customPopup(info)}
                                 </Marker>
                             
@@ -431,7 +425,7 @@ class AddData extends React.Component {
                                 position={info?.latLng}
                                 icon = {icon}
                                 >
-                                  {/* {console.log(info)} */}
+                                 
                                   {this.customPopup(info)}
                                 </Marker>
                             

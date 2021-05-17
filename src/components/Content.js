@@ -1,15 +1,14 @@
 import React from "react";
 import Tranding from './Trending'
-// import Filtering from './Filtering'
 import "../CSS/Content.css";
 import { db, auth } from "../data/firebase";
 import img from "../img/thairath.png";
-// import request from "request";
 import verify from '../img/verify.png'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
+
 class Content extends React.Component {
   constructor(props) {
     super(props);
@@ -17,14 +16,6 @@ class Content extends React.Component {
     this.state = {
         news_thairath:null,
         selected: false,
-        DisasNews:null,  
-        CovidNews:null,
-        EnvNews:null,
-        SocialNews:null,
-        CrimeNews:null,
-        TriffNews:null,
-        AcciNews:null,
-        PolitNews:null,
         checking:null,
         keyword:null
 
@@ -88,7 +79,7 @@ class Content extends React.Component {
 
   filtering = (e) =>{
     console.log('topic',e)
-    this.setState({selected:true})
+    // this.setState({selected:true})
     let query = db.collection('news_thairath').where('status','==',1).orderBy("news_date", "desc")
     let Disas = query.where('topic', '==', 'ภัยพิบัติ')
     let CO = query.where('topic', '==', 'COVID-19')
@@ -106,9 +97,8 @@ class Content extends React.Component {
         snapshot.forEach(doc => {
           const data = doc.data()
           size.push(data)
-          console.log(this.state.DisasNews)
         }) 
-        this.setState({DisasNews:size,
+        this.setState({news_thairath:size,
         })
       }).catch(error => console.log(error))
     }
@@ -120,7 +110,7 @@ class Content extends React.Component {
           const data = doc.data()
           size.push(data)
         })
-      this.setState({CovidNews:size})
+      this.setState({news_thairath:size})
       }).catch(error => console.log(error))
     }
     else if(e == 'ข่าวสังคม'){
@@ -131,7 +121,7 @@ class Content extends React.Component {
           const data = doc.data()
           size.push(data)  
         })
-        this.setState({SocialNews:size})
+        this.setState({news_thairath:size})
       }).catch(error => console.log(error))
     }
     else if(e == 'สภาพแวดล้อม'){
@@ -142,7 +132,7 @@ class Content extends React.Component {
           const data = doc.data()
           size.push(data)
         })
-        this.setState({EnvNews:size})
+        this.setState({news_thairath:size})
       }).catch(error => console.log(error))
     }
     else if(e == 'อาชญากรรม'){
@@ -153,7 +143,7 @@ class Content extends React.Component {
           const data = doc.data()
           size.push(data)
         })
-        this.setState({CrimeNews:size})
+        this.setState({news_thairath:size})
       }).catch(error => console.log(error))
     }
     else if(e == 'จราจร'){
@@ -164,7 +154,7 @@ class Content extends React.Component {
           const data = doc.data()
           size.push(data)
         })
-        this.setState({TriffNews:size})
+        this.setState({news_thairath:size})
       }).catch(error => console.log(error))
     }
     else if(e == 'อุบัติเหตุ'){
@@ -174,9 +164,8 @@ class Content extends React.Component {
         snapshot.forEach(doc => {
           const data = doc.data()
           size.push(data)
-          // console.log(this.state.AcciNews)
         })
-        this.setState({AcciNews:size})
+        this.setState({news_thairath:size})
       }).catch(error => console.log(error))
     }
     else if(e == 'การเมือง'){
@@ -187,7 +176,7 @@ class Content extends React.Component {
           const data = doc.data()
           size.push(data)
         })
-        this.setState({PolitNews:size})
+        this.setState({news_thairath:size})
       }).catch(error => console.log(error))
     }
 
@@ -208,7 +197,6 @@ class Content extends React.Component {
           const data = doc.data()
           news_thairath.push(data)
           
-          // console.log(this.state.DisasNews)
         })
         this.setState({news_thairath:news_thairath})
       }).catch(error => console.log(error))
@@ -220,7 +208,6 @@ class Content extends React.Component {
           const data = doc.data()
           news_thairath.push(data)
           
-          // console.log(this.state.DisasNews)
         })
         this.setState({news_thairath:news_thairath})
       }).catch(error => console.log(error))
@@ -232,7 +219,6 @@ class Content extends React.Component {
           const data = doc.data()
           news_thairath.push(data)
           
-          // console.log(this.state.DisasNews)
         })
         this.setState({news_thairath:news_thairath})
       }).catch(error => console.log(error))
@@ -291,7 +277,7 @@ class Content extends React.Component {
             <div className="col-8">
               <div className="card bg-light mb-3 card-size">
                 <div className="card-header">ปัญหาทั้งหมด</div>
-                {this.state.selected === false ?
+                {
                   this.state.news_thairath &&
                   this.state.news_thairath.map((content) => {
                   
@@ -299,7 +285,7 @@ class Content extends React.Component {
                       <div className="card-body pt-3 pb-0">
                         {content.name == "Thairath" ? (
                           <>
-                          <p>demo</p>
+                          <p>demo data</p>
                           <img className="news-img" src={img} /> 
                           </>
                         ) : (
@@ -326,186 +312,6 @@ class Content extends React.Component {
                       </div>
                     );
                   })
-                :
-                this.state.DisasNews ?
-                  this.state.DisasNews.map((content) =>{
-                    return(
-                    <div className="card-body pt-3 pb-0">
-                        {content.name == "Thairath" ? (
-                          <img className="news-img" src={img} />
-                        ) : (
-                          <img className="news-img" src={content.photo} />
-                        )}
-                        <p className="name">{content.name}</p>
-                        <p className="mt-1 mb-1">{content.news_name}</p>
-                        <p className="card-subtitle mt-1">{content.province}</p>
-                        <p className='card-subtitle'>ประเภทของปัญหาหลังจากการทำนายด้วย AI: {content.topic}</p>
-                        <p className='time-content'>{content.news_date}</p>
-                        {content.verify &&
-                          <p className='time-content'> Verified by: {content.verify}<img src={verify} /></p>
-                        }
-                        <hr className="mb-0 mt-0"></hr>
-                    </div>
-                    )
-                    
-                  })
-                
-                :
-                  this.state.CovidNews ?
-                  this.state.CovidNews.map((content) =>{
-                    return(
-                    <div className="card-body pt-3 pb-0">
-                        {content.name == "Thairath" ? (
-                          <img className="news-img" src={img} />
-                        ) : (
-                          <img className="news-img" src={content.photo} />
-                        )}
-                        <p className="name">{content.name}</p>
-                        <p className="mt-1 mb-1">{content.news_name}</p>
-                        <p className="card-subtitle mt-1">{content.province}</p>
-                        <p className='card-subtitle'>ประเภทของปัญหาหลังจากการทำนายด้วย AI: {content.topic}</p>
-                        <p className='time-content'>{content.news_date}</p>
-                        {content.verify &&
-                          <p className='time-content'> Verified by: {content.verify}<img src={verify} /></p>
-                        }
-                        <hr className="mb-0 mt-0"></hr>
-                    </div>
-                    )
-                  })
-                    :
-                      this.state.SocialNews ?
-                      this.state.SocialNews.map((content) =>{
-                        return(
-                        <div className="card-body pt-3 pb-0">
-                            {content.name == "Thairath" ? (
-                              <img className="news-img" src={img} />
-                            ) : (
-                              <img className="news-img" src={content.photo} />
-                            )}
-                            <p className="name">{content.name}</p>
-                            <p className="mt-1 mb-1">{content.news_name}</p>
-                            <p className="card-subtitle mt-1">{content.province}</p>
-                            <p className='card-subtitle'>ประเภทของปัญหาหลังจากการทำนายด้วย AI: {content.topic}</p>
-                            <p className='time-content'>{content.news_date}</p>
-                            {content.verify &&
-                              <p className='time-content'> Verified by: {content.verify}<img src={verify} /></p>
-                            }
-                            <hr className="mb-0 mt-0"></hr>
-                        </div>
-                        )
-                      })
-                      :
-                        this.state.CrimeNews ?
-                        this.state.CrimeNews.map((content) =>{
-                          return(
-                          <div className="card-body pt-3 pb-0">
-                              {content.name == "Thairath" ? (
-                                <img className="news-img" src={img} />
-                              ) : (
-                                <img className="news-img" src={content.photo} />
-                              )}
-                              <p className="name">{content.name}</p>
-                              <p className="mt-1 mb-1">{content.news_name}</p>
-                              <p className="card-subtitle mt-1">{content.province}</p>
-                              <p className='card-subtitle'>ประเภทของปัญหาหลังจากการทำนายด้วย AI: {content.topic}</p>
-                              <p className='time-content'>{content.news_date}</p>
-                              {content.verify &&
-                                <p className='time-content'> Verified by: {content.verify}<img src={verify} /></p>
-                              }
-                              <hr className="mb-0 mt-0"></hr>
-                          </div>
-                          )
-                        })
-                        :
-                          this.state.TriffNews ?
-                          this.state.TriffNews.map((content) =>{
-                            return(
-                            <div className="card-body pt-3 pb-0">
-                                {content.name == "Thairath" ? (
-                                  <img className="news-img" src={img} />
-                                ) : (
-                                  <img className="news-img" src={content.photo} />
-                                )}
-                                <p className="name">{content.name}</p>
-                                <p className="mt-1 mb-1">{content.news_name}</p>
-                                <p className="card-subtitle mt-1">{content.province}</p>
-                                <p className='card-subtitle'>ประเภทของปัญหาหลังจากการทำนายด้วย AI: {content.topic}</p>
-                                <p className='time-content'>{content.news_date}</p>
-                                {content.verify &&
-                                  <p className='time-content'> Verified by: {content.verify}<img src={verify} /></p>
-                                }
-                                <hr className="mb-0 mt-0"></hr>
-                            </div>
-                            )
-                          })
-                          :
-                            this.state.AcciNews ?
-                            this.state.AcciNews.map((a) =>{
-                              return(
-                              <div className="card-body pt-3 pb-0">
-                              {a.name == "Thairath" ? (
-                                <img className="news-img" src={img} />
-                              ) : (
-                                <img className="news-img" src={a.photo} />
-                              )}
-                              <p className="name">{a.name}</p>
-                              <p className="mt-1 mb-1">{a.news_name}</p>
-                              <p className="card-subtitle mt-1">{a.province}</p>
-                              <p className='card-subtitle'>ประเภทของปัญหาหลังจากการทำนายด้วย AI: {a.topic}</p>
-                              <p className='time-content'>{a.news_date}</p>
-                              {a.verify &&
-                                <p className='time-content'> Verified by: {a.verify}<img src={verify} /></p>
-                              }
-                              <hr className="mb-0 mt-0"></hr>
-                              </div>
-                              )
-                            })
-                              
-                            :
-                              this.state.EnvNews ?
-                              this.state.EnvNews.map((content) =>{
-                                return(
-                                <div className="card-body pt-3 pb-0">
-                                    {content.name == "Thairath" ? (
-                                      <img className="news-img" src={img} />
-                                    ) : (
-                                      <img className="news-img" src={content.photo} />
-                                    )}
-                                    <p className="name">{content.name}</p>
-                                    <p className="mt-1 mb-1">{content.news_name}</p>
-                                    <p className="card-subtitle mt-1">{content.province}</p>
-                                    <p className='card-subtitle'>ประเภทของปัญหาหลังจากการทำนายด้วย AI: {content.topic}</p>
-                                    <p className='time-content'>{content.news_date}</p>
-                                    {content.verify &&
-                                      <p className='time-content'> Verified by: {content.verify}<img src={verify} /></p>
-                                    }
-                                    <hr className="mb-0 mt-0"></hr>
-                                </div>
-                                )
-                              })
-                              :
-                                this.state.PolitNews &&
-                                this.state.PolitNews.map((content) =>{
-                                  return(
-                                  <div className="card-body pt-3 pb-0">
-                                      {content.name == "Thairath" ? (
-                                        <img className="news-img" src={img} />
-                                      ) : (
-                                        <img className="news-img" src={content.photo} />
-                                      )}
-                                      <p className="name">{content.name}</p>
-                                      <p className="mt-1 mb-1">{content.news_name}</p>
-                                      <p className="card-subtitle mt-1">{content.province}</p>
-                                      <p className='card-subtitle'>ประเภทของปัญหาหลังจากการทำนายด้วย AI: {content.topic}</p>
-                                      <p className='time-content'>{content.news_date}</p>
-                                      {content.verify &&
-                                        <p className='time-content'> Verified by: {content.verify}<img src={verify} /></p>
-                                      }
-                                      <hr className="mb-0 mt-0"></hr>
-                                  </div>
-                                  )
-                                })
-
                 }
                 
               </div>
