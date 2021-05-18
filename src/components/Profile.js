@@ -149,6 +149,7 @@ class Profile extends React.Component {
                                         className="card-body pt-3 pb-0">
                                         <img className='news-img' src={content.data.photo}/>
                                         <p className='news'>{content.data.name}</p>
+                                        
                                         {content.data.status == '0' ?
                                           <Button size='sm' className='status' variant="warning" >
                                           
@@ -157,22 +158,20 @@ class Profile extends React.Component {
                                         : content.data.status == '1' ?
                                           <Button size='sm' className='status' variant="success">
                                           <img src={check} /> ข้อมูลปัญหาถูกต้อง
+                                          <p className='verify'> Verified by: {content.data.verify}<img src={verify} /></p>
                                           </Button>
                                           :
                                             <Button size='sm' className='status' variant="danger">
                                             <img src={close} /> ข้อมูลปัญหาไม่ถูกต้อง
                                             </Button>
                                         }
-                                       
+                                                                               
                                         <p className='mt-1 mb-2'>{content.data.news_name} <img className='bin-button' title='ลบปัญหานี้' src={bin} 
                                         onClick={() => this.removeData(content.id)}
                                         /></p>
-                                        <p className='card-subtitle'>ประเภทของปัญหาหลังจากการทำนายด้วย AI: {content.data.topic}</p>                   
                                         <p className='time'>{content.data.news_date}</p>
-                                        {content.data.verify &&
-                                        <p className='time'> Verified by: {content.data.verify}<img src={verify} /></p>
-                                        }
-                                        
+                                        <p className='time'>ประเภทของปัญหาหลังจากการทำนายด้วย AI: {content.data.topic}</p>                   
+                                                                             
                                         <hr className='mb-0 mt-0 hr-news'></hr>
                                         </div> 
                                                                          

@@ -283,6 +283,7 @@ class Content extends React.Component {
                   
                     return (
                       <div className="card-body pt-3 pb-0">
+                        
                         {content.name == "Thairath" ? (
                           <>
                           <p>demo data</p>
@@ -292,22 +293,24 @@ class Content extends React.Component {
                           <img className="news-img" src={content.photo} />
                         )}
                         <p className="name">{content.name}</p>
-                        <p className="mt-1 mb-1">{content.news_name}</p>
-                        <p className="card-subtitle mt-1">{content.province}</p>
-                        <p className='card-subtitle'>ประเภทของปัญหาหลังจากการทำนายด้วย AI: {content.topic}</p>
+                        {/* <p className='time-content'></p> */}
+                        <p className='verify-content'> {content.news_date}</p> 
+                       
+                        <p className="mt-2 mb-3">{content.news_name}</p>
+                        
+                        <p className='time-content'>ประเภทของปัญหาหลังจากการทำนายด้วย AI: {content.topic}</p>
+                        <p className='time-content'> Verified by: {content.verify}<img src={verify} /></p> 
                          
+                         {/* <p className="card-subtitle mt-1">{content.province}</p> */}
+                                                 
                         {content.news_url && (
                           <h6>
-                            
                             <a href={content.news_url}>
                               คลิกที่นี่เพื่อดูรายละเอียด
                             </a>
                           </h6>
                         )}
-                        <p className='time-content'>{content.news_date}</p>
-                        {content.verify &&
-                          <p className='time-content'> Verified by: {content.verify}<img src={verify} /></p>
-                        }
+                        
                         <hr className="mb-0 mt-0"></hr>
                       </div>
                     );

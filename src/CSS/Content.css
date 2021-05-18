@@ -5,7 +5,15 @@
 }
 
 .time-content {
+    /* margin-top: 10px; */
     color: #535353;
     font-size: smaller;
     margin-bottom: 0px;
+}
+
+.verify-content {
+    color: #535353;
+    font-size: smaller;
+    margin-bottom: 0px;
+    float: right;
 }

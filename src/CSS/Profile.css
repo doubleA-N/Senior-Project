@@ -25,9 +25,27 @@
     animation-iteration-count: infinite;
 }
 
+.descri {
+    font-size: large;
+}
+
 .status {
     float: right;
     pointer-events: none;
+    /* display: inline-block; */
+}
+
+.bottom {
+    /* position: absolute; */
+    bottom: 3px;
+    right: 3px;
+}
+
+.verify {
+    font-size: x-small;
+    margin-bottom: 0px;
+    /* float: right; */
+    /* display: inline-block; */
 }
 
 @keyframes shake {
