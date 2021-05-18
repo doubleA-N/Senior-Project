@@ -133,10 +133,10 @@ class Profile extends React.Component {
                         </div>
                     </div>
                     <div className='col-8'>
-                        <div className="card bg-card mb-3 card-size">
                         <Alert className='text-warn' variant='warning'>
-                        *ปัญหาจากการรายงานของคุณจะถูกตรวจสอบจากหน่วยงานที่เกี่ยวข้อง
+                        * ปัญหาจากการรายงานของคุณจะถูกตรวจสอบจากหน่วยงานที่เกี่ยวข้อง
                         </Alert>
+                        <div className="card bg-card mb-3 card-size">
                         <div className="card-header">โพสของคุณ</div>
                         {this.state.news_thairath && 
                         this.state.news_thairath.map(content => {

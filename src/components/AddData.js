@@ -67,6 +67,7 @@ class AddData extends React.Component {
       localStorage.setItem('id', this.state.id);
       // window.location = '/AddData'
       console.log(this.state.fullName,this.state.id)
+      alert('บันทึกเรียบร้อยแล้ว!')
     }
 
     addUser = e => {
@@ -307,7 +308,7 @@ class AddData extends React.Component {
                     <br /><br />
                     <h4 className='heading'>รายงานปัญหาของคุณ</h4>
                     <Alert className='text-warn' variant='warning'>
-                    *ปัญหาจากการรายงานของคุณจะถูกตรวจสอบจากหน่วยงานที่เกี่ยวข้อง
+                    * ปัญหาจากการรายงานของคุณจะถูกตรวจสอบจากหน่วยงานที่เกี่ยวข้อง
                     </Alert>
                     <textarea
                       class ='form-control'
