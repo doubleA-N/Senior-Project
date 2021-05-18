@@ -191,7 +191,7 @@ settings = {
 
 tp = TopicPredictor(settings, tag)
 
-@app.route('/api/predict', methods=['GET','POST'])
+@app.route('/predict', methods=['GET','POST'])
 
 def predict():
     '''
