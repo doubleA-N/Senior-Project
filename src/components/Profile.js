@@ -10,7 +10,7 @@ import close from '../img/close.png'
 import verify from '../img/verify.png'
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
-
+import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
 
 class Profile extends React.Component {
@@ -134,6 +134,9 @@ class Profile extends React.Component {
                     </div>
                     <div className='col-8'>
                         <div className="card bg-card mb-3 card-size">
+                        <Alert className='text-warn' variant='warning'>
+                        *ปัญหาจากการรายงานของคุณจะถูกตรวจสอบจากหน่วยงานที่เกี่ยวข้อง
+                        </Alert>
                         <div className="card-header">โพสของคุณ</div>
                         {this.state.news_thairath && 
                         this.state.news_thairath.map(content => {

@@ -117,7 +117,7 @@ class AddData extends React.Component {
     )
     .then(res => res.json())
     .then(data => {
-    console.log(data)
+    console.log(data.output)
     this.setState({topic: data.output});
     
     let confirmData = ['ชื่อผู้ใช้: '+this.state.fullName
@@ -306,6 +306,9 @@ class AddData extends React.Component {
                     </Button>
                     <br /><br />
                     <h4 className='heading'>รายงานปัญหาของคุณ</h4>
+                    <Alert className='text-warn' variant='warning'>
+                    *ปัญหาจากการรายงานของคุณจะถูกตรวจสอบจากหน่วยงานที่เกี่ยวข้อง
+                    </Alert>
                     <textarea
                       class ='form-control'
                       id='report'
