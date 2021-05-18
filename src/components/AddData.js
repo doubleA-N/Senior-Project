@@ -73,171 +73,177 @@ class AddData extends React.Component {
     addUser = e => {
 
     e.preventDefault();
-            
-    let date = new Date();
-    let dd = date.getDate();
-    let mm = date.getMonth()+1;
-    const yyyy = date.getFullYear();
-    let hh = date.getHours();
-    let min = date.getMinutes();
-    let sec  = date.getSeconds();
-    if(dd<10){
-      dd=`0${dd}`;
-    }
-    if(mm<10){
-      mm=`0${mm}`
-    }
-    if(hh<10){
-      hh=`0${hh}`
-    }
-    if(min<10){
-      min=`${mm}`
-    }
-    if(sec<10){
-      sec=`${mm}`
-    }
-    date = `${yyyy}/${mm}/${dd} ${hh}:${min}:${sec}`
-
-    if(this.state.info){
-      e.preventDefault();   
-      db.settings({
-        timestampsInSnapshots: true
-    }); 
-   
-    fetch("https://flask-topic-prediction.herokuapp.com/predict", {
-      // mode: 'no-cors',
-      method:"POST",
-      cache: "no-cache",
-      headers:{
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        // "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify(this.state.description)
-      }
-    )
-    .then(res => res.json())
-    .then(data => {
-    console.log(data.output)
-    this.setState({topic: data.output});
-    
-    let confirmData = ['ชื่อผู้ใช้: '+this.state.fullName
-    ,'\n เลขบัตรประชาชน:'+this.state.id
-    ,'\n ปัญหาที่เกิดขึ้น:'+this.state.description,
-    '\n เวลา:'+date,
-    '\n location:'+ this.state.placename,
-    '\n หัวข้อ:'+ this.state.topic]
-
-      confirmAlert({
-        title: 'คุณยืนยันที่จะรายงานปัญหาที่เกิดขึ้นหรือไม่',
-        message: confirmData,
-        buttons: [
-          {
-            label: 'รายงานทันที',
-            onClick: () => {
-              db.collection("news_thairath").add({
-                uid: this.state.user.uid,
-                photo: this.state.user.photoURL,
-                name: this.state.user.displayName,
-                news_name: this.state.description,
-                person: 'Normal User',
-                location: JSON.parse(JSON.stringify([this.state.info.lat,this.state.info.lng])),
-                news_date:date,
-                topic: this.state.topic,
-                status: 0,
-                fullName: this.state.fullName,
-                id: this.state.id
-            }).then(() => {
-              console.log("Document successfully add!");
-              window.location = '/Profile'
-              this.setState({ 
-                name: "",
-                description: "",
-                info: null               
-                });
-
-              });  
-            }
-          },
-          {
-            label: 'กลับไปแก้ไข'
-          }
-        ],
-        closeOnEscape: true,
-        closeOnClickOutside: true
-      });
-    });
-
-    }else if(!this.state.info){
-      e.preventDefault(); 
-      db.settings({
-        timestampsInSnapshots: true
-    });
-
-    fetch("https://flask-topic-prediction.herokuapp.com/predict", {
-      // mode: 'no-cors',
-      method:"POST",
-      cache: "no-cache",
-      headers:{
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        // "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify(this.state.description)
-      }
-    ) .then(res => res.json())
-      .then( data => {
-      console.log(data)
-      this.setState({topic: JSON.stringify(data.output)});
+    if(this.state.fullName == "" || this.state.id == ""){
       
-      confirmAlert({
-        // title: 'คุณยืนยันที่จะรายงานปัญหาที่เกิดขึ้นหรือไม่',
-        message: 'คุณยังไม่เลือกสถานที่ที่เกิดปัญหา',
-        buttons: [
-          {
-            label: 'ใช้ตำแหน่งปัจจุบันของฉัน',
-            onClick: () => {
-              if (!navigator.geolocation) {
-                alert('Geolocation is not supported by your browser');
-              } else {
-                navigator.geolocation.getCurrentPosition((position) => {
-                 this.setState({latLng: position.coords})
-                      db.collection("news_thairath").add({
-                        uid: this.state.user.uid,
-                        photo: this.state.user.photoURL,
-                        name: this.state.user.displayName,
-                        news_name: this.state.description,
-                        person: 'Normal User',
-                        location: JSON.parse(JSON.stringify([this.state.latLng.latitude,this.state.latLng.longitude])),
-                        news_date:date,
-                        topic: this.state.topic,
-                        status: 0,
-                        fullName: this.state.fullName,
-                        id: this.state.id
-                    }).then(() => {
-                      console.log("Document successfully add!");
-                      window.location = '/Profile'
-                      this.setState({
-                        name: "",
-                        description: "",
-                        info: null               
-                        });
-                      });  
-                }, () => {
-                  alert('Unable to retrieve your location');
-                });
+      alert('กรุณากรอกข้อมูลตามบัตรประชาชนของท่าน')
+    } else{
+      let date = new Date();
+      let dd = date.getDate();
+      let mm = date.getMonth()+1;
+      const yyyy = date.getFullYear();
+      let hh = date.getHours();
+      let min = date.getMinutes();
+      let sec  = date.getSeconds();
+      if(dd<10){
+        dd=`0${dd}`;
+      }
+      if(mm<10){
+        mm=`0${mm}`
+      }
+      if(hh<10){
+        hh=`0${hh}`
+      }
+      if(min<10){
+        min=`${mm}`
+      }
+      if(sec<10){
+        sec=`${mm}`
+      }
+      date = `${yyyy}/${mm}/${dd} ${hh}:${min}:${sec}`
+  
+      if(this.state.info){
+        e.preventDefault();   
+        db.settings({
+          timestampsInSnapshots: true
+      }); 
+     
+      fetch("https://flask-topic-prediction.herokuapp.com/predict", {
+        // mode: 'no-cors',
+        method:"POST",
+        cache: "no-cache",
+        headers:{
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          // "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify(this.state.description)
+        }
+      )
+      .then(res => res.json())
+      .then(data => {
+      console.log(data.output)
+      this.setState({topic: data.output});
+      
+      let confirmData = ['ชื่อผู้ใช้: '+this.state.fullName
+      ,'\n เลขบัตรประชาชน:'+this.state.id
+      ,'\n ปัญหาที่เกิดขึ้น:'+this.state.description,
+      '\n เวลา:'+date,
+      '\n location:'+ this.state.placename,
+      '\n หัวข้อ:'+ this.state.topic]
+  
+        confirmAlert({
+          title: 'คุณยืนยันที่จะรายงานปัญหาที่เกิดขึ้นหรือไม่',
+          message: confirmData,
+          buttons: [
+            {
+              label: 'รายงานทันที',
+              onClick: () => {
+                db.collection("news_thairath").add({
+                  uid: this.state.user.uid,
+                  photo: this.state.user.photoURL,
+                  name: this.state.user.displayName,
+                  news_name: this.state.description,
+                  person: 'Normal User',
+                  location: JSON.parse(JSON.stringify([this.state.info.lat,this.state.info.lng])),
+                  news_date:date,
+                  topic: this.state.topic,
+                  status: 0,
+                  fullName: this.state.fullName,
+                  id: this.state.id
+              }).then(() => {
+                console.log("Document successfully add!");
+                window.location = '/Profile'
+                this.setState({ 
+                  name: "",
+                  description: "",
+                  info: null               
+                  });
+  
+                });  
               }
+            },
+            {
+              label: 'กลับไปแก้ไข'
             }
-          },
-          {
-            label: 'กลับไปแก้ไข'
-          }
-        ],
-        closeOnEscape: true,
-        closeOnClickOutside: true,
-       
+          ],
+          closeOnEscape: true,
+          closeOnClickOutside: true
+        });
       });
-    });
+  
+      }else if(!this.state.info){
+        e.preventDefault(); 
+        db.settings({
+          timestampsInSnapshots: true
+      });
+  
+      fetch("https://flask-topic-prediction.herokuapp.com/predict", {
+        // mode: 'no-cors',
+        method:"POST",
+        cache: "no-cache",
+        headers:{
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          // "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify(this.state.description)
+        }
+      ) .then(res => res.json())
+        .then( data => {
+        console.log(data.output)
+        this.setState({topic: data.output});
+        
+        confirmAlert({
+          // title: 'คุณยืนยันที่จะรายงานปัญหาที่เกิดขึ้นหรือไม่',
+          message: 'คุณยังไม่เลือกสถานที่ที่เกิดปัญหา',
+          buttons: [
+            {
+              label: 'ใช้ตำแหน่งปัจจุบันของฉัน',
+              onClick: () => {
+                if (!navigator.geolocation) {
+                  alert('Geolocation is not supported by your browser');
+                } else {
+                  navigator.geolocation.getCurrentPosition((position) => {
+                   this.setState({latLng: position.coords})
+                        db.collection("news_thairath").add({
+                          uid: this.state.user.uid,
+                          photo: this.state.user.photoURL,
+                          name: this.state.user.displayName,
+                          news_name: this.state.description,
+                          person: 'Normal User',
+                          location: JSON.parse(JSON.stringify([this.state.latLng.latitude,this.state.latLng.longitude])),
+                          news_date:date,
+                          topic: this.state.topic,
+                          status: 0,
+                          fullName: this.state.fullName,
+                          id: this.state.id
+                      }).then(() => {
+                        console.log("Document successfully add!");
+                        window.location = '/Profile'
+                        this.setState({
+                          name: "",
+                          description: "",
+                          info: null               
+                          });
+                        });  
+                  }, () => {
+                    alert('Unable to retrieve your location');
+                  });
+                }
+              }
+            },
+            {
+              label: 'กลับไปแก้ไข'
+            }
+          ],
+          closeOnEscape: true,
+          closeOnClickOutside: true,
+         
+        });
+      });
+    }
+            
+   
 
     }
       };  
@@ -287,6 +293,7 @@ class AddData extends React.Component {
                       placeholder="report here"
                       onChange={this.updateInput}
                       value={this.state.fullName}
+                      required
                       />
 
                     <label for='idnum'>เลขบัตรประชาชน </label>
@@ -298,6 +305,7 @@ class AddData extends React.Component {
                       placeholder="report here"
                       onChange={this.updateInput}
                       value={this.state.id}
+                      required
                       />
                      <Button className='save-button' variant="primary" 
                     size="sm"
