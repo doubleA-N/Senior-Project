@@ -81,16 +81,16 @@ class Content extends React.Component {
     console.log('topic',e)
     // this.setState({selected:true})
     let query = db.collection('news_thairath').where('status','==',1).orderBy("news_date", "desc")
-    let Disas = query.where('topic', '==', 'ภัยพิบัติ')
+    let Disas = query.where('topic', '==', 'อุทกภัย')
     let CO = query.where('topic', '==', 'COVID-19')
-    let Env = query.where('topic', '==', 'สภาพแวดล้อม')
+    let Env = query.where('topic', '==', 'สภาพอากาศ')
     let Social = query.where('topic', '==', 'ข่าวสังคม')
-    let cri = query.where('topic', '==', 'อาชญากรรม')
+    // let cri = query.where('topic', '==', 'อาชญากรรม')
     let traf = query.where('topic', '==', 'จราจร')
-    let acc = query.where('topic', '==', 'อุบัติเหตุ')
-    let poli = query.where('topic', '==', 'การเมือง')
+    // let acc = query.where('topic', '==', 'อุบัติเหตุ')
+    // let poli = query.where('topic', '==', 'การเมือง')
     
-    if(e == 'ภัยพิบัติ'){
+    if(e == 'อุทกภัย'){
       Disas.get()
       .then( snapshot => {
       const size = []
@@ -124,7 +124,7 @@ class Content extends React.Component {
         this.setState({news_thairath:size})
       }).catch(error => console.log(error))
     }
-    else if(e == 'สภาพแวดล้อม'){
+    else if(e == 'สภาพอากาศ'){
       Env.get()
       .then( snapshot => {
         const size = []
@@ -135,17 +135,17 @@ class Content extends React.Component {
         this.setState({news_thairath:size})
       }).catch(error => console.log(error))
     }
-    else if(e == 'อาชญากรรม'){
-      cri.get()
-      .then( snapshot => {
-        const size =[]
-        snapshot.forEach(doc => {
-          const data = doc.data()
-          size.push(data)
-        })
-        this.setState({news_thairath:size})
-      }).catch(error => console.log(error))
-    }
+    // else if(e == 'อาชญากรรม'){
+    //   cri.get()
+    //   .then( snapshot => {
+    //     const size =[]
+    //     snapshot.forEach(doc => {
+    //       const data = doc.data()
+    //       size.push(data)
+    //     })
+    //     this.setState({news_thairath:size})
+    //   }).catch(error => console.log(error))
+    // }
     else if(e == 'จราจร'){
       traf.get()
       .then( snapshot => {
@@ -157,28 +157,28 @@ class Content extends React.Component {
         this.setState({news_thairath:size})
       }).catch(error => console.log(error))
     }
-    else if(e == 'อุบัติเหตุ'){
-      acc.get()
-      .then( snapshot => {
-        const size = []
-        snapshot.forEach(doc => {
-          const data = doc.data()
-          size.push(data)
-        })
-        this.setState({news_thairath:size})
-      }).catch(error => console.log(error))
-    }
-    else if(e == 'การเมือง'){
-      poli.get()
-      .then( snapshot => {
-        const size = []
-        snapshot.forEach(doc => {
-          const data = doc.data()
-          size.push(data)
-        })
-        this.setState({news_thairath:size})
-      }).catch(error => console.log(error))
-    }
+    // else if(e == 'อุบัติเหตุ'){
+    //   acc.get()
+    //   .then( snapshot => {
+    //     const size = []
+    //     snapshot.forEach(doc => {
+    //       const data = doc.data()
+    //       size.push(data)
+    //     })
+    //     this.setState({news_thairath:size})
+    //   }).catch(error => console.log(error))
+    // }
+    // else if(e == 'การเมือง'){
+    //   poli.get()
+    //   .then( snapshot => {
+    //     const size = []
+    //     snapshot.forEach(doc => {
+    //       const data = doc.data()
+    //       size.push(data)
+    //     })
+    //     this.setState({news_thairath:size})
+    //   }).catch(error => console.log(error))
+    // }
 
   }
   handleChange = (e) =>{
@@ -269,7 +269,7 @@ class Content extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='main-content'>
         <div className="App-link">
           <h3 className="heading">ดูข้อมูลของปัญหา</h3>
           <div className="App-line"></div>
@@ -297,9 +297,13 @@ class Content extends React.Component {
                         <p className='verify-content'> {content.news_date}</p> 
                        
                         <p className="mt-2 mb-3">{content.news_name}</p>
-                        
+                        { content.topic &&
+                        <>
                         <p className='time-content'>ประเภทของปัญหาหลังจากการทำนายด้วย AI: {content.topic}</p>
                         <p className='time-content'> Verified by: {content.verify}<img src={verify} /></p> 
+                        </>
+                        }
+                        
                          
                          {/* <p className="card-subtitle mt-1">{content.province}</p> */}
                                                  
@@ -343,10 +347,10 @@ class Content extends React.Component {
                       >
                         <Dropdown.Item 
                         onSelect={this.filtering}
-                        eventKey='ภัยพิบัติ'
+                        eventKey='อุทกภัย'
                         
                         >
-                          ภัยพิบัติ
+                          อุทกภัย
                         </Dropdown.Item>
                         <Dropdown.Divider />
 
@@ -366,13 +370,13 @@ class Content extends React.Component {
                         </Dropdown.Item>
                         <Dropdown.Divider />
 
-                        <Dropdown.Item 
+                        {/* <Dropdown.Item 
                         onSelect={this.filtering}
                         eventKey='อาชญากรรม'
                         >
                           อาชญากรรม
                         </Dropdown.Item>
-                        <Dropdown.Divider />
+                        <Dropdown.Divider /> */}
 
                         <Dropdown.Item 
                         onSelect={this.filtering}
@@ -382,28 +386,28 @@ class Content extends React.Component {
                         </Dropdown.Item>
                         <Dropdown.Divider />
 
-                        <Dropdown.Item 
+                        {/* <Dropdown.Item 
                         onSelect={this.filtering}
                         eventKey='อุบัติเหตุ'
                         >
                           อุบัติเหตุ
                         </Dropdown.Item>
-                        <Dropdown.Divider />
+                        <Dropdown.Divider /> */}
 
                         <Dropdown.Item 
                         onSelect={this.filtering}
-                        eventKey='สภาพแวดล้อม'
+                        eventKey='สภาพอากาศ'
                         >
-                          สภาพแวดล้อม
+                          สภาพอากาศ
                         </Dropdown.Item>
                         <Dropdown.Divider />
 
-                        <Dropdown.Item 
+                        {/* <Dropdown.Item 
                         onSelect={this.filtering}
                         eventKey='การเมือง'
                         >
                           การเมือง
-                        </Dropdown.Item>
+                        </Dropdown.Item> */}
                         
 
                       </DropdownButton>

@@ -34,14 +34,14 @@ class Trending extends React.Component {
           }
         
         let query = db.collection('news_thairath').where('status','==',1)
-        let Disas = query.where('topic', '==', 'ภัยพิบัติ')
+        let Disas = query.where('topic', '==', 'อุทกภัย')
         let CO = query.where('topic', '==', 'COVID-19')
-        let Env = query.where('topic', '==', 'สภาพแวดล้อม')
+        let Env = query.where('topic', '==', 'สภาพอากาศ')
         let Social = query.where('topic', '==', 'ข่าวสังคม')
-        let cri = query.where('topic', '==', 'อาชญากรรม')
+        // let cri = query.where('topic', '==', 'อาชญากรรม')
         let traf = query.where('topic', '==', 'จราจร')
-        let acc = query.where('topic', '==', 'อุบัติเหตุ')
-        let poli = query.where('topic', '==', 'การเมือง')
+        // let acc = query.where('topic', '==', 'อุบัติเหตุ')
+        // let poli = query.where('topic', '==', 'การเมือง')
         
         if(Disas){
             Disas.get()
@@ -49,6 +49,7 @@ class Trending extends React.Component {
             let size = snapshot.size
               this.setState({disaster:size})
             // console.log('count',size)
+            this.sorting()
             }).catch(error => console.log(error))
         }
         if(CO){
@@ -57,6 +58,7 @@ class Trending extends React.Component {
             let size = snapshot.size
               this.setState({covid:size})
             // console.log('covid',size)
+            this.sorting()
             }).catch(error => console.log(error))
         }
         if(Env){
@@ -65,6 +67,7 @@ class Trending extends React.Component {
             let size = snapshot.size
               this.setState({environment:size})
             // console.log('covid',size)
+            this.sorting()
             }).catch(error => console.log(error))
         }
         if(Social){
@@ -73,40 +76,21 @@ class Trending extends React.Component {
             let size = snapshot.size
               this.setState({social:size})
             // console.log('covid',size)
+            this.sorting()
             }).catch(error => console.log(error))
         }
-        if(cri){
-          cri.get()
-          .then( snapshot => {
-          let size = snapshot.size
-            this.setState({crime:size})
-          // console.log('covid',size)
-          }).catch(error => console.log(error))
-        }
+        
         if(traf){
           traf.get()
           .then( snapshot => {
           let size = snapshot.size
             this.setState({traffic:size})
           // console.log('covid',size)
+          this.sorting()
           }).catch(error => console.log(error))
         }
-        if(acc){
-          acc.get()
-          .then( snapshot => {
-          let size = snapshot.size
-            this.setState({accident:size})
-          // console.log('covid',size)
-          }).catch(error => console.log(error))
-        }
-        if(poli){
-          poli.get()
-          .then( snapshot => {
-          let size = snapshot.size
-            this.setState({politic:size})
-            this.sorting()
-          }).catch(error => console.log(error))
-        }
+        
+       
       })
         
       }
@@ -114,17 +98,15 @@ class Trending extends React.Component {
     sorting = () => {
      var fields = 
       [{topic:'COVID-19',value:this.state.covid},
-      {topic:'ภัยพิบัติ',value:this.state.disaster},
+      {topic:'อุทกภัย',value:this.state.disaster},
       {topic:'ข่าวสังคม',value:this.state.social},
-      {topic:'อาชญากรรม',value:this.state.crime},
       {topic:'จราจร',value:this.state.traffic},
-      {topic:'การเมือง',value:this.state.politic},
-      {topic:'อุบัติเหตุ',value:this.state.accident},
-      {topic:'สภาพแวดล้อม',value:this.state.environment}
+      {topic:'สภาพอากาศ',value:this.state.environment}
       ];
  
       fields = fields.sort((a,b) => b.value - a.value)
       this.setState({sorted:fields})
+      
       
     }
     
