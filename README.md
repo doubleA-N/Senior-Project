@@ -1,5 +1,17 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Description
+In this project, 
+- user are able to report their problem that they face in thailand. then, the problem will automatically generated topic for each problem information by using ML API (written with flask python). 
+**User can login with google account only to report their problem.
+
+- And the problem from users have reported will display in display page and Thailand map.
+**Note that the problem will display when admin user verifird only
+
+- Users are able to see their profile and see their problem that they have reported before.
+
+**This project also including admin user side to verify each problem from user
+
 ## Available Scripts
 
 In the project directory, you can run:
